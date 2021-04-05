@@ -3,12 +3,14 @@ package org.sopt.androidseminar
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import org.sopt.androidseminar.databinding.ActivityMainBinding
 
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val activityName = "SignInActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,5 +54,35 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(activityName, "onStart")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d(activityName, "onRestart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(activityName, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(activityName, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(activityName, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(activityName, "onDestroy")
     }
 }

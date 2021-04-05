@@ -14,37 +14,37 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.e(activityName, "onCreate")
+        Log.d(activityName, "onCreate")
     }
 
     override fun onStart() {
         super.onStart()
-        Log.e(activityName, "onStart")
+        Log.d(activityName, "onStart")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.e(activityName, "onRestart")
+        Log.d(activityName, "onRestart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.e(activityName, "onResume")
+        Log.d(activityName, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.e(activityName, "onPause")
+        Log.d(activityName, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.e(activityName, "onStop")
+        Log.d(activityName, "onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e(activityName, "onDestroy")
+        Log.d(activityName, "onDestroy")
     }
 
 }
