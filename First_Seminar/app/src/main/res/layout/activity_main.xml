@@ -95,11 +95,10 @@
             android:id="@+id/noIdPwButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
             android:text="@string/noidpw_question" />
 
         <TextView
+            android:id="@+id/registerTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

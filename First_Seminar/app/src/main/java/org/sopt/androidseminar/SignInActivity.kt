@@ -15,8 +15,8 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root) // 주의, 코틀린에서 프로퍼티기 때문에 .root로 바로 getter 호출이 된다.
 
-
         loginButtonClickEvent()
+        signUpButtonClickEvent()
     }
 
     private fun loginButtonClickEvent() {
@@ -27,7 +27,29 @@ class SignInActivity : AppCompatActivity() {
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요!", Toast.LENGTH_SHORT)
                     .show()
             } else { // 모두 차 있다면,
-                // TODO Home Activity로 이동
+                val intent = Intent(this, HomeActivty::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun signUpButtonClickEvent() {
+        binding.registerTV.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivityForResult(intent, 0)
+        }
+    }
+
+    //값 수신하는 부분
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode){
+            0->{
+                if(resultCode == RESULT_OK){
+                    binding.idET.setText(data!!.getStringExtra("githubID").toString())
+                    binding.pwET.setText(data.getStringExtra("pw").toString())
+                }
             }
         }
     }
