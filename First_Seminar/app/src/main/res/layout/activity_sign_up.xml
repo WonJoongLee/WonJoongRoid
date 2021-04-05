@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     tools:context=".SignUpActivity">
 
     <LinearLayout
@@ -18,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginHorizontal="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +46,9 @@
         app:layout_constraintBottom_toTopOf="@id/pwLinear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameLinear">
+        app:layout_constraintTop_toBottomOf="@id/nameLinear"
+        android:layout_marginHorizontal="10dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,7 +76,9 @@
         app:layout_constraintBottom_toTopOf="@id/signUpBt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/githubIdLinear">
+        app:layout_constraintTop_toBottomOf="@id/githubIdLinear"
+        android:layout_marginHorizontal="10dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -103,6 +107,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="10dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
