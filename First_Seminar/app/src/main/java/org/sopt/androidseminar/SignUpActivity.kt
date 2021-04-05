@@ -3,9 +3,9 @@ package org.sopt.androidseminar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class SecondActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_second)
+        setContentView(R.layout.activity_sign_up)
     }
 }

@@ -16,20 +16,18 @@ class SignInActivity : AppCompatActivity() {
         setContentView(binding.root) // 주의, 코틀린에서 프로퍼티기 때문에 .root로 바로 getter 호출이 된다.
 
 
-        initButtonClickEvent()
+        loginButtonClickEvent()
     }
 
-    private fun initButtonClickEvent() {
+    private fun loginButtonClickEvent() {
         binding.loginButton.setOnClickListener {
-            val userID = binding.ETId.text
-            if (userID.isNullOrBlank()) { // 비어있으면,
-                Toast.makeText(this@SignInActivity, "Id를 입력해주세요", Toast.LENGTH_SHORT)
-                    .show() // this@MainActivity는 this가 MainActivity임을 알려준다.
-                val intent = Intent(this, SecondActivity::class.java)
-                startActivity(intent)
-            }else{
-                Toast.makeText(this@SignInActivity, "안녕하세요", Toast.LENGTH_SHORT)
-                    .show() // this@MainActivity는 this가 MainActivity임을 알려준다.
+            val userID = binding.idET.text
+            val userPW = binding.pwET.text
+            if (userID.isNullOrBlank() || userPW.isNullOrBlank()) { // 둘 중 하나라도 비어있으면,
+                Toast.makeText(this, "아이디/비밀번호를 확인해주세요!", Toast.LENGTH_SHORT)
+                    .show()
+            } else { // 모두 차 있다면,
+                // TODO Home Activity로 이동
             }
         }
     }

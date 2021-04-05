@@ -27,7 +27,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/ET_id"
+            android:id="@+id/idET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/write_id"
@@ -55,7 +55,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/ET_pw"
+            android:id="@+id/pwET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/write_pw"
