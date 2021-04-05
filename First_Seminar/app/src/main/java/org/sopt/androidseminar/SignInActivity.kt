@@ -16,6 +16,7 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root) // 주의, 코틀린에서 프로퍼티기 때문에 .root로 바로 getter 호출이 된다.
+        Log.d(activityName, "onCreate")
 
         loginButtonClickEvent()
         signUpButtonClickEvent()

@@ -17,6 +17,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Log.d(activityName, "onCreate")
 
         signUpButtonClickEvent()
     }
