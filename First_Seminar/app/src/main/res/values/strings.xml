@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AndroidSeminar</string>
+    <string name="github_id">깃허브 아이디</string>
+    <string name="write_id">아이디를 입력해주세요</string>
+    <string name="pw">비밀번호</string>
+    <string name="write_pw">비밀번호를 입력해주세요</string>
+    <string name="login">LOGIN</string>
+    <string name="noidpw_question">아이디/비밀번호가 없으신가요?</string>
+    <string name="register">회원가입</string>
 </resources>
