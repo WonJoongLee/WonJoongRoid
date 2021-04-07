@@ -50,8 +50,10 @@ class SignInActivity : AppCompatActivity() {
         when(requestCode){
             0->{
                 if(resultCode == RESULT_OK){
-                    binding.idET.setText(data!!.getStringExtra("githubID").toString())
-                    binding.pwET.setText(data.getStringExtra("pw").toString())
+                    data?.let{
+                        binding.idET.setText(data.getStringExtra("githubID").toString())
+                        binding.pwET.setText(data.getStringExtra("pw").toString())
+                    }
                 }
             }
         }
