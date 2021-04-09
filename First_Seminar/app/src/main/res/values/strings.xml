@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">AndroidSeminar</string>
+    <string name="github_id">깃허브 아이디</string>
+    <string name="write_id">ID를 입력해주세요</string>
+    <string name="pw">비밀번호</string>
+    <string name="write_pw">비밀번호를 입력해주세요</string>
+    <string name="login">LOGIN</string>
+    <string name="noidpw_question">아이디/비밀번호가 없으신가요?</string>
+    <string name="register">회원가입</string>
+    <string name="signup">SIGNUP</string>
+    <string name="name">이름</string>
+    <string name="write_name">이름을 입력해주세요</string>
+    <string name="wonjoong_image">WonJoong Image</string>
+    <string name="my_github_nickname">WonJoongLee</string>
+    <string name="my_name">WonJoong Lee</string>
+    <string name="my_introduce">안녕하세요. 안드로이드 개발을 좋아하는 이원중입니다.</string>
 </resources>
