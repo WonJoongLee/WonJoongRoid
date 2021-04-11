@@ -15,6 +15,8 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d(activityName, "onCreate")
+
+
     }
 
     override fun onStart() {
