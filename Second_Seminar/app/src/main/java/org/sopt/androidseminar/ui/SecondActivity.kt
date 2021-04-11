@@ -1,7 +1,8 @@
-package org.sopt.androidseminar
+package org.sopt.androidseminar.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.sopt.androidseminar.R
 
 class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

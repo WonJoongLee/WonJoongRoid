@@ -1,4 +1,4 @@
-package org.sopt.androidseminar
+package org.sopt.androidseminar.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
