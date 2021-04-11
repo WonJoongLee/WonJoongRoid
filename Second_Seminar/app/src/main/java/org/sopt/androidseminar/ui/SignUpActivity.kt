@@ -6,6 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import org.sopt.androidseminar.R
+import org.sopt.androidseminar.adapters.RepositoryAdapter
+import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
@@ -20,7 +25,9 @@ class SignUpActivity : AppCompatActivity() {
         Log.d(activityName, "onCreate")
 
         signUpButtonClickEvent()
+
     }
+
 
     private fun signUpButtonClickEvent() {
         binding.signUpBt.setOnClickListener {

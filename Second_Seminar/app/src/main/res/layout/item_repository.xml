@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_repository_name"
@@ -18,6 +18,8 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:maxLines="1"
+        android:ellipsize="end"
         tools:text="레포지토리 이름" />
 
     <TextView
@@ -30,9 +32,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_repository_name"
         android:layout_marginTop="5dp"
-        android:ellipsize="start"
-        tools:text="레포지토리 실행"
-        android:singleLine="true" />
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="레포지토리 설명"
+         />
 
     <TextView
         android:id="@+id/tv_repository_language"
