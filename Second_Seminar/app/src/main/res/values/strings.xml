@@ -16,4 +16,9 @@
     <string name="my_introduce">안드로이드를 좋아하는 개발자</string>
     <string name="label_more">MORE</string>
     <string name="label_repository_name">레포지토리 이름</string>
+    <string name="title_activity_fragment">FragmentActivity</string>
+    <string name="label_fragment">THIS IS FRAGMENT</string>
+    <string name="label_activity">THIS IS ACTIVITY</string>
+
+
 </resources>

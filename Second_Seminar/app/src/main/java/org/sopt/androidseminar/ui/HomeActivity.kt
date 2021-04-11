@@ -1,8 +1,10 @@
 package org.sopt.androidseminar.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.androidseminar.R
@@ -30,8 +32,15 @@ class HomeActivity : AppCompatActivity() {
         repoRecyclerView.adapter = repoAdapter
         repoRecyclerView.setHasFixedSize(false)
 
+        moreButtonClickedEvent()
     }
 
+    private fun moreButtonClickedEvent(){
+        binding.btMore.setOnClickListener {
+            val intent = Intent(this, FragmentActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
     private fun repoDataInput(repoList : MutableList<RepositoryInfo>) : MutableList<RepositoryInfo>{
         for(i in 1..10){
