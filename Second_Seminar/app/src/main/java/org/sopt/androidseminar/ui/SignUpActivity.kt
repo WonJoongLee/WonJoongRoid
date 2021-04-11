@@ -30,13 +30,13 @@ class SignUpActivity : AppCompatActivity() {
 
 
     private fun signUpButtonClickEvent() {
-        binding.signUpBt.setOnClickListener {
+        binding.btSignUp.setOnClickListener {
             if (isEditTextEmpty()) {
                 Toast.makeText(this, "빈 칸이 있는지 확인해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, SignUpActivity::class.java)
-                intent.putExtra("githubID", binding.idET.text.toString())
-                intent.putExtra("pw", binding.pwET.text.toString())
+                intent.putExtra("githubID", binding.etGithubId.text.toString())
+                intent.putExtra("pw", binding.etGithubPw.text.toString())
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }
@@ -45,7 +45,7 @@ class SignUpActivity : AppCompatActivity() {
 
     // 하나라도 비어있지 않은 edit text가 있으면 true 반환, 모두 채워져 있다면 false 반환
     private fun isEditTextEmpty(): Boolean {
-        return binding.nameET.text.isNullOrBlank() || binding.idET.text.isNullOrBlank() || binding.pwET.text.isNullOrBlank()
+        return binding.etGithubName.text.isNullOrBlank() || binding.etGithubId.text.isNullOrBlank() || binding.etGithubPw.text.isNullOrBlank()
     }
 
     override fun onStart() {

@@ -18,8 +18,8 @@ class SignInActivity : AppCompatActivity() {
             if (it.resultCode == RESULT_OK) {
                 val data = it.data
                 data?.let {
-                    binding.idET.setText(data.getStringExtra("githubID").toString())
-                    binding.pwET.setText(data.getStringExtra("pw").toString())
+                    binding.etGithubId.setText(data.getStringExtra("githubID").toString())
+                    binding.etGithubPw.setText(data.getStringExtra("pw").toString())
                 }
 
             }
@@ -36,9 +36,9 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun loginButtonClickEvent() {
-        binding.loginButton.setOnClickListener {
-            val userID = binding.idET.text
-            val userPW = binding.pwET.text
+        binding.btLogin.setOnClickListener {
+            val userID = binding.etGithubId.text
+            val userPW = binding.etGithubPw.text
             if (userID.isNullOrBlank() || userPW.isNullOrBlank()) { // 둘 중 하나라도 비어있으면,
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요!", Toast.LENGTH_SHORT)
                     .show()
@@ -50,7 +50,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun signUpButtonClickEvent() {
-        binding.registerTV.setOnClickListener {
+        binding.tvRegister.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             signUpActivityLauncher.launch(intent)
         }
