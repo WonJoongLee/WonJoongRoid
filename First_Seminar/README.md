@@ -2,37 +2,38 @@
 # 1주차  
 **화면 전환 시 데이터 송수신 로직**  
   
-![temp](https://user-images.githubusercontent.com/57510192/113583138-3846eb80-9664-11eb-84b4-333f1f8cce35.PNG)  
+![reg](https://user-images.githubusercontent.com/57510192/114303454-2c967180-9b09-11eb-8457-bd4d2a301b3e.PNG)
   
   
 - SignInActivity 코드  
 ```  
-val intent = Intent(this, SignUpActivity::class.java) startActivityForResult(intent, 0)  
+private val signUpActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val data = it.data
+                data?.let {
+                    binding.etGithubId.setText(data.getStringExtra("githubID").toString())
+                    binding.etGithubPw.setText(data.getStringExtra("pw").toString())
+                }
+
+            }
+        }
 ```  
-`startActivityForResult`를 통해 값을 돌려받음.   
-뒤에 Int형 parameter는 단순히 어떤 Activity인지 구별하기 위한 ID값.  
+원래는 registerForActivityResult 함수 내에서 입력을 받아 다시 처리하는 부분까지 모두 관여한다. SignUpActivity에서 RESULT_OK라고 값을 넘겨줄 때만만 editText의 값을 변경해준다.
 <br>  
 - SignUpActivity 코드  
-```  
-val intent = Intent(this, SignUpActivity::class.java) intent.putExtra("githubID", binding.idET.text.toString()) intent.putExtra("pw", binding.pwET.text.toString()) setResult(Activity.RESULT_OK, intent) finish()  
-```  
+
+```
+val intent = Intent(this, SignUpActivity::class.java)  
+intent.putExtra("githubID", binding.etGithubId.text.toString())  
+intent.putExtra("pw", binding.etGithubPw.text.toString())  
+setResult(Activity.RESULT_OK, intent)  
+finish()
+```
+
 `putExtra`를 통해 원하는 값을 돌려줄 수 있음.   
 `startActivity`메서드가 아닌 `setResult`메서드와 `finish`메서드를 통해 돌려줄 값을 설정하고, Activity를 종료함.  
 <br>  
-- 다시 값을 받기 위해 SignInActivity 코드  
-```  
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {    
-    super.onActivityResult(requestCode, resultCode, data)    
-    when(requestCode){    
-        0->{    
-            if(resultCode == RESULT_OK){    
-                binding.idET.setText(data!!.getStringExtra("githubID").toString())    
-                binding.pwET.setText(data.getStringExtra("pw").toString())    
-            }    
-        }    
-} }  
-```  
-그러면 다시 값을 돌려받는 Activity에서 `onActivityResult`메서드를 overriding하여 값을 받음. 다른 부분에서 특별한 것은 없고 `requestCode`가 `startActivityForResult`할 때 준 고유 번호 값임을 주의하자.  
   
 **화면 전환 시 생명 주기 변화**  
 SignInActivity에서 HomeActivity로 이동했을 때 생명주기의 변화 Logcat.  
