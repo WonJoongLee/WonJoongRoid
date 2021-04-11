@@ -6,23 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import org.sopt.androidseminar.R
-import org.sopt.androidseminar.adapters.RepositoryAdapter
-import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private val activityName = "SignUpActivity"
+    private val ACTIVITYNAME = "SignUpActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.d(activityName, "onCreate")
+        Log.d(ACTIVITYNAME, "onCreate")
 
         signUpButtonClickEvent()
 
@@ -31,7 +26,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun signUpButtonClickEvent() {
         binding.btSignUp.setOnClickListener {
-            if (isEditTextEmpty()) {
+            if (isGithubInfoEditTextEmpty()) {
                 Toast.makeText(this, "빈 칸이 있는지 확인해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, SignUpActivity::class.java)
@@ -44,37 +39,37 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     // 하나라도 비어있지 않은 edit text가 있으면 true 반환, 모두 채워져 있다면 false 반환
-    private fun isEditTextEmpty(): Boolean {
+    private fun isGithubInfoEditTextEmpty(): Boolean {
         return binding.etGithubName.text.isNullOrBlank() || binding.etGithubId.text.isNullOrBlank() || binding.etGithubPw.text.isNullOrBlank()
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d(activityName, "onStart")
+        Log.d(ACTIVITYNAME, "onStart")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d(activityName, "onRestart")
+        Log.d(ACTIVITYNAME, "onRestart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(activityName, "onResume")
+        Log.d(ACTIVITYNAME, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(activityName, "onPause")
+        Log.d(ACTIVITYNAME, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(activityName, "onStop")
+        Log.d(ACTIVITYNAME, "onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(activityName, "onDestroy")
+        Log.d(ACTIVITYNAME, "onDestroy")
     }
 }

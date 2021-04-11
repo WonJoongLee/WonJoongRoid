@@ -11,7 +11,7 @@ import org.sopt.androidseminar.databinding.ActivityMainBinding
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val activityName = "SignInActivity"
+    private val ACTIVITYNAME = "SignInActivity"
 
     private val signUpActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -29,7 +29,7 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root) // 주의, 코틀린에서 프로퍼티기 때문에 .root로 바로 getter 호출이 된다.
-        Log.d(activityName, "onCreate")
+        Log.d(ACTIVITYNAME, "onCreate")
 
         loginButtonClickEvent()
         signUpButtonClickEvent()
@@ -37,9 +37,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun loginButtonClickEvent() {
         binding.btLogin.setOnClickListener {
-            val userID = binding.etGithubId.text
-            val userPW = binding.etGithubPw.text
-            if (userID.isNullOrBlank() || userPW.isNullOrBlank()) { // 둘 중 하나라도 비어있으면,
+            if (isIdPwETEmpty()) { // 둘 중 하나라도 비어있으면,
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요!", Toast.LENGTH_SHORT)
                     .show()
             } else { // 모두 차 있다면,
@@ -47,6 +45,10 @@ class SignInActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun isIdPwETEmpty() : Boolean{
+        return binding.etGithubId.text.isNullOrBlank() || binding.etGithubPw.text.isNullOrBlank()
     }
 
     private fun signUpButtonClickEvent() {
@@ -58,31 +60,31 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d(activityName, "onStart")
+        Log.d(ACTIVITYNAME, "onStart")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d(activityName, "onRestart")
+        Log.d(ACTIVITYNAME, "onRestart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(activityName, "onResume")
+        Log.d(ACTIVITYNAME, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(activityName, "onPause")
+        Log.d(ACTIVITYNAME, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(activityName, "onStop")
+        Log.d(ACTIVITYNAME, "onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(activityName, "onDestroy")
+        Log.d(ACTIVITYNAME, "onDestroy")
     }
 }
