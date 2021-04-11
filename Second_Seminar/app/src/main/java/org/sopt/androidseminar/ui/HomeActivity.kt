@@ -34,16 +34,11 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun repoDataInput(repoList : MutableList<RepositoryInfo>) : MutableList<RepositoryInfo>{
-        repoList.add(RepositoryInfo("레포지토리 이름1", "레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름2", "레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름3", "레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름4", "레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름5", "레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름6", "레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름7", "레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름8", "레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름9", "레포지토리 설명", "레포지토리 언어"))
-        repoList.add(RepositoryInfo("레포지토리 이름10", "레포지토리 설명", "레포지토리 언어"))
+        for(i in 1..10){
+            repoList.add(RepositoryInfo("레포지토리 이름".plus(i), "레포지토리 설명".plus(i), "레포지토리 언어".plus(i)))
+        }
+        //Repository 이름이나 설명이 긴 경우 처리를 보여주기 위해 임시로 추가
+        repoList.add(RepositoryInfo("레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름", "레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명", "레포지토리 언어"))
         return repoList
     }
 
