@@ -28,15 +28,16 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setRepoRv() {
-        var repoList = mutableListOf<RepositoryInfo>()
+        val repoTempList = mutableListOf<RepositoryInfo>()
         val repoAdapter = RepositoryAdapter()
-        val repoRecyclerView = findViewById<RecyclerView>(R.id.rv_repository)
-        repoList = repoDataInput(repoList)
+        val repoRecyclerView = binding.rvRepository
+        val repoList = repoDataInput(repoTempList).toList()
         repoAdapter.data = repoList
         repoRecyclerView.layoutManager =
-            LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
         repoRecyclerView.adapter = repoAdapter
         repoRecyclerView.setHasFixedSize(false)
+        repoAdapter.notifyDataSetChanged()
     }
 
     private fun moreButtonClickedEvent() {

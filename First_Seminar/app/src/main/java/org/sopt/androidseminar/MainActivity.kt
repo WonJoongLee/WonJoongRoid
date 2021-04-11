@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initButtonClickEvent() {
         binding.loginButton.setOnClickListener {
-            val userID = binding.ETId.text
+            val userID = binding.idET.text
             if (userID.isNullOrBlank()) { // 비어있으면,
                 Toast.makeText(this@MainActivity, "Id를 입력해주세요", Toast.LENGTH_SHORT)
                     .show() // this@MainActivity는 this가 MainActivity임을 알려준다.

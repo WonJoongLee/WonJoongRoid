@@ -11,7 +11,7 @@ import org.sopt.androidseminar.databinding.ActivityMainBinding
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val ACTIVITYNAME = "SignInActivity"
+    private val ACTIVITY_NAME = "SignInActivity"
 
     private val signUpActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -29,7 +29,7 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root) // 주의, 코틀린에서 프로퍼티기 때문에 .root로 바로 getter 호출이 된다.
-        Log.d(ACTIVITYNAME, "onCreate")
+        Log.d(ACTIVITY_NAME, "onCreate")
 
         loginButtonClickEvent()
         signUpButtonClickEvent()
@@ -47,7 +47,7 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun isIdPwETEmpty() : Boolean{
+    private fun isIdPwETEmpty(): Boolean {
         return binding.etGithubId.text.isNullOrBlank() || binding.etGithubPw.text.isNullOrBlank()
     }
 
@@ -60,31 +60,31 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d(ACTIVITYNAME, "onStart")
+        Log.d(ACTIVITY_NAME, "onStart")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d(ACTIVITYNAME, "onRestart")
+        Log.d(ACTIVITY_NAME, "onRestart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(ACTIVITYNAME, "onResume")
+        Log.d(ACTIVITY_NAME, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(ACTIVITYNAME, "onPause")
+        Log.d(ACTIVITY_NAME, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(ACTIVITYNAME, "onStop")
+        Log.d(ACTIVITY_NAME, "onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(ACTIVITYNAME, "onDestroy")
+        Log.d(ACTIVITY_NAME, "onDestroy")
     }
 }

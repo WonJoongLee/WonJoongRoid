@@ -1,6 +1,5 @@
 package org.sopt.androidseminar.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import org.sopt.androidseminar.data.RepositoryInfo
 
 class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
 
-    var data = mutableListOf<RepositoryInfo>()
+    var data = listOf<RepositoryInfo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_repository, parent, false)
