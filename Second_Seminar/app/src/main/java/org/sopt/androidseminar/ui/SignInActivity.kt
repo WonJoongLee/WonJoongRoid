@@ -11,7 +11,6 @@ import org.sopt.androidseminar.databinding.ActivityMainBinding
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val ACTIVITY_NAME = "SignInActivity"
 
     private val signUpActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -47,9 +46,8 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun isIdPwETEmpty(): Boolean {
-        return binding.etGithubId.text.isNullOrBlank() || binding.etGithubPw.text.isNullOrBlank()
-    }
+    private fun isIdPwETEmpty() =
+        binding.etGithubId.text.isNullOrBlank() || binding.etGithubPw.text.isNullOrBlank()
 
     private fun signUpButtonClickEvent() {
         binding.tvRegister.setOnClickListener {
@@ -86,5 +84,9 @@ class SignInActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(ACTIVITY_NAME, "onDestroy")
+    }
+
+    companion object {
+        private const val ACTIVITY_NAME = "SignInActivity"
     }
 }

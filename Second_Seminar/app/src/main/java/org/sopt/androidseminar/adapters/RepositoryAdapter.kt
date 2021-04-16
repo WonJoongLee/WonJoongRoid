@@ -1,20 +1,21 @@
 package org.sopt.androidseminar.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.data.RepositoryInfo
+import org.sopt.androidseminar.databinding.ItemRepositoryBinding
 
-class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
-
-    var data = listOf<RepositoryInfo>()
+class RepositoryAdapter(private val data: List<RepositoryInfo>) :
+    RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_repository, parent, false)
-        return RepositoryViewHolder(view)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemRepositoryBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_repository, parent, false)
+        return RepositoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
@@ -23,14 +24,12 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewH
 
     override fun getItemCount(): Int = data.size
 
-    class RepositoryViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        private val repoName = itemView.findViewById<TextView>(R.id.tv_repository_name)
-        private val repoInfo = itemView.findViewById<TextView>(R.id.tv_repository_detail)
-        private val repoLang = itemView.findViewById<TextView>(R.id.tv_repository_language)
-        fun bind(repositoryInfo: RepositoryInfo){
-            repoName.text = repositoryInfo.repoName
-            repoInfo.text = repositoryInfo.repoInfo
-            repoLang.text = repositoryInfo.repoLang
+    class RepositoryViewHolder(private val binding: ItemRepositoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(repositoryInfo: RepositoryInfo) {
+            binding.tvRepositoryName.text = repositoryInfo.repoLang
+            binding.tvRepositoryDetail.text = repositoryInfo.repoInfo
+            binding.tvRepositoryLanguage.text = repositoryInfo.repoLang
         }
     }
 }

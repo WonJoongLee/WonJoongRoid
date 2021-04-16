@@ -14,13 +14,12 @@ import org.sopt.androidseminar.databinding.ActivityHomeBinding
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private val ACTIVITYNAME = "HomeActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.d(ACTIVITYNAME, "onCreate")
+        Log.d(ACTIVITY_NAME, "onCreate")
 
         setRepoRv()
 
@@ -28,13 +27,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setRepoRv() {
-        val repoTempList = mutableListOf<RepositoryInfo>()
-        val repoAdapter = RepositoryAdapter()
+        val repoList = mutableListOf<RepositoryInfo>()
+        repoDataInput(repoList)
+
+        val repoAdapter = RepositoryAdapter(repoList)
         val repoRecyclerView = binding.rvRepository
-        val repoList = repoDataInput(repoTempList).toList()
-        repoAdapter.data = repoList
-        repoRecyclerView.layoutManager =
-            LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
         repoRecyclerView.adapter = repoAdapter
         repoRecyclerView.setHasFixedSize(false)
         repoAdapter.notifyDataSetChanged()
@@ -47,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun repoDataInput(repoList: MutableList<RepositoryInfo>): MutableList<RepositoryInfo> {
+    private fun repoDataInput(repoList: MutableList<RepositoryInfo>) {
         for (i in 1..10) {
             repoList.add(RepositoryInfo("레포지토리 이름".plus(i), "레포지토리 설명".plus(i), "레포지토리 언어".plus(i)))
         }
@@ -59,37 +56,39 @@ class HomeActivity : AppCompatActivity() {
                 "레포지토리 언어"
             )
         )
-        return repoList
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d(ACTIVITYNAME, "onStart")
+        Log.d(ACTIVITY_NAME, "onStart")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d(ACTIVITYNAME, "onRestart")
+        Log.d(ACTIVITY_NAME, "onRestart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(ACTIVITYNAME, "onResume")
+        Log.d(ACTIVITY_NAME, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(ACTIVITYNAME, "onPause")
+        Log.d(ACTIVITY_NAME, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(ACTIVITYNAME, "onStop")
+        Log.d(ACTIVITY_NAME, "onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(ACTIVITYNAME, "onDestroy")
+        Log.d(ACTIVITY_NAME, "onDestroy")
     }
 
+    companion object {
+        private const val ACTIVITY_NAME = "HomeActivity"
+    }
 }
