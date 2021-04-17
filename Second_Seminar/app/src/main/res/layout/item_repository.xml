@@ -5,6 +5,17 @@
 
     <data>
 
+        <variable
+            name="repoName"
+            type="String" />
+
+        <variable
+            name="repoInfo"
+            type="String" />
+
+        <variable
+            name="repoLang"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,15 +28,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:text="@{repoName}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:maxLines="1"
-            android:ellipsize="end"
             tools:text="레포지토리 이름" />
 
         <TextView
@@ -33,13 +45,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{repoInfo}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_repository_name"
-            android:layout_marginTop="5dp"
-            android:maxLines="1"
-            android:ellipsize="end"
             tools:text="레포지토리 설명" />
 
         <TextView
@@ -47,11 +60,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:text="@{repoLang}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_repository_detail"
-            tools:text="설명" />
+            tools:text="언어" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

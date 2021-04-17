@@ -28,9 +28,9 @@ class RepositoryAdapter(private val data: List<RepositoryInfo>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryInfo: RepositoryInfo) {
             binding.apply {
-                tvRepositoryName.text = repositoryInfo.repoLang
-                tvRepositoryDetail.text = repositoryInfo.repoInfo
-                tvRepositoryLanguage.text = repositoryInfo.repoLang
+                repoName = repositoryInfo.repoName
+                repoInfo = repositoryInfo.repoInfo
+                repoLang = repositoryInfo.repoLang
             }
         }
     }
