@@ -13,9 +13,9 @@ class FragmentActivity : AppCompatActivity() {
     }
 
     private fun connectFragment() {
-        val tempFragment = TempFragment()
+        val tempFragment = FollowerFragment()
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_temp, tempFragment)
+        transaction.add(R.id.fragment_follower, tempFragment)
         transaction.commit()
     }
 }

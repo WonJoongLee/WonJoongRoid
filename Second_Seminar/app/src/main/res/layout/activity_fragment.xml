@@ -10,24 +10,22 @@
         android:id="@+id/tv_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_temp"
-        android:text="@string/label_activity"
-        android:textSize="20sp"
-        android:textColor="@color/purple_500"
+        android:text="@string/label_follower"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         android:textStyle="bold"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/fragment_follower"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_temp"
+        android:id="@+id/fragment_follower"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_activity">
-    </androidx.fragment.app.FragmentContainerView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_activity"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

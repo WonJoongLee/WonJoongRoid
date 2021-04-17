@@ -19,6 +19,8 @@
     <string name="title_activity_fragment">FragmentActivity</string>
     <string name="label_fragment">THIS IS FRAGMENT</string>
     <string name="label_activity">THIS IS ACTIVITY</string>
+    <string name="label_follower">Follower</string>
+    <string name="label_follower_image">Follower Image</string>
 
 
 </resources>
