@@ -1,95 +1,186 @@
-﻿
-# 2주차
+﻿# 2주차
+### 구동영상
+<p align="center">
+<img src="https://user-images.githubusercontent.com/57510192/115836891-f7681880-a452-11eb-9ded-acb7c1216069.gif" width="300px">
+</p>
 
+2주차에서는 `Fragment`, `RecyclerView`, `Data & UI`, `List`를 배웠습니다.
+<br>
 ### 폴더 구조
-![폴더구조](https://user-images.githubusercontent.com/57510192/114294030-30f56700-9ad6-11eb-92f5-7d8625461ac0.PNG)
-- **adapters** : Recycler View를 위한 adapter
-- **data** : Repository data class
-- **ui** : 화면에 띄우는 부분
+<p align="center">
+<img src="https://user-images.githubusercontent.com/57510192/115832679-20d27580-a44e-11eb-9529-e1e99fb0450f.PNG" width="200px">
+</p>
+- adapters : 앱 내에는 두 가지의 리사이클러뷰가 있는데, 각 리사이클러 뷰들의 어댑터가 있습니다.
+- data : data class들이 정의되어 있습니다.
+- ui : Activity들과 Fragment ui가 정의되어 있습니다.
+<br>
 
-### 리사이클러 뷰
-```
-class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {  
-  
-    var data = mutableListOf<RepositoryInfo>()  
+## Level 1 - 리사이클러뷰 구현 + Fragment
+리사이클러뷰는 크게 `adapter`, `data class`, activity에서 adapter를 설정해주는 코드로 이루어져 있습니다.
+<br>
+
+### adapter 구현 부분
+adapter는 기본적으로 `onCreateViewHolder`, `onBindViewHolder`, `getItemCount`로 이루어져 있고, 	추가적으로 Custom `ViewHolder` class를 정의합니다. 
+
+RepositoryAdapter.kt
+```kotlin
+class RepositoryAdapter(private val data: List<RepositoryInfo>) :  
+    RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {  
   
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {  
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_repository, parent, false)  
-        return RepositoryViewHolder(view)  
+        val layoutInflater = LayoutInflater.from(parent.context)  
+        val binding: ItemRepositoryBinding =  
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_repository, parent, false)  
+        return RepositoryViewHolder(binding)  
     }  
   
     override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {  
         holder.bind(data[position])  
     }  
   
-    override fun getItemCount(): Int = data.size  
+    override fun getItemCount() = data.size  
   
-  class RepositoryViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){  
-        private val repoName = itemView.findViewById<TextView>(R.id.tv_repository_name)  
-        private val repoInfo = itemView.findViewById<TextView>(R.id.tv_repository_detail)  
-        private val repoLang = itemView.findViewById<TextView>(R.id.tv_repository_language)  
-        fun bind(repositoryInfo: RepositoryInfo){  
-            repoName.text = repositoryInfo.repoName  
- repoInfo.text = repositoryInfo.repoInfo  
- repoLang.text = repositoryInfo.repoLang  
+  class RepositoryViewHolder(private val binding: ItemRepositoryBinding) :  
+        RecyclerView.ViewHolder(binding.root) {  
+        fun bind(repositoryInfo: RepositoryInfo) {  
+            binding.apply {  
+  repo = repositoryInfo  
+            }  
   }  
     }  
 }
 ```
-`onCreateViewHolder`, `onBindViewHolder`, `getItemCount`를 overriding하고 `View Holder` class를 통해 리사이클러 뷰 어댑터를 구현할 수 있다.
-```
-private fun setRepoRv(){  
-    var repoList = mutableListOf<RepositoryInfo>()  
-    val repoAdapter = RepositoryAdapter()  
-    val repoRecyclerView = findViewById<RecyclerView>(R.id.rv_repository)  
-    repoList = repoDataInput(repoList)  
-    repoAdapter.data = repoList  
-    repoRecyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)  
-    repoRecyclerView.adapter = repoAdapter  
+
+SigningActivity.kt
+```kotlin
+private fun setRepoRv() {  
+    val repoList = mutableListOf<RepositoryInfo>()  
+    initData(repoList)  
+  
+    val repoAdapter = RepositoryAdapter(repoList)  
+    val repoRecyclerView = binding.rvRepository  
+	repoRecyclerView.adapter = repoAdapter  
     repoRecyclerView.setHasFixedSize(false)  
+    repoAdapter.notifyDataSetChanged()  
 }
 ```
-리사이클러 뷰를 사용할 액티비티에서는 리사이클러 뷰에 들어갈 data를 준비하고, 어댑터와 데이터들을 연결하여 리사이클러 뷰를 최종적으로 구현할 수 있다.
+위 코드로 xml에 있던 recyclerview에 adapter를 연결해줄 수 있습니다.
+<br>
+### textview의 길이가 너무 길어질 경우에 대한 처리
+```xml
+android:ellipsize="end"  
+android:maxLines="1"
+```
+<br>
 
-### fragment 구현
-Fragment를 구현하기 위해 필요한 준비물
-1. Fragment를 구현할 view(xml 파일) - `fragment_temp.xml`
-2. Fragment만을 구현한 view를 다룰 kotlin 파일 - `TempFragment.kt`
-3. Fragment를 담을 view(xml 파일) - `activity_fragment.xml`
-4. Fragment를 담고 있는 view를 다룰 kotlin 파일 - `FragmentActivity.kt`
-5. build.gradle에 아래 코드 입력
-```
-implementation "androidx.fragment:fragment-ktx:1.3.2"
-```
-***
-Fragment를 다룰 kotlin파일에서는 아래와 같이 간단하게 처리해주면 된다.
-```
+### Fragment 내의 리사이클러 뷰 처리
+기존에 Fragment에 대해 잘 몰랐는데 이번 기회에 조금 알 수 있게 되었습니다.
+1. 먼저 Fragment xml과 kotlin 파일을 생성하고 정의합니다.
+```kotlin
 override fun onCreateView(  
     inflater: LayoutInflater,  
   container: ViewGroup?,  
   savedInstanceState: Bundle?  
-): View? {  
-    return inflater.inflate(R.layout.fragment_temp, container, false)  
+): View {  
+    binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follower, container, false)  
+    setFollowerRv() // 이 코드는 RecyclerView 설정하는 코드여서 꼭 들어가야 하는 코드가 아닙니다.
+    return binding.root  
 }
 ```
-***
-Fragment를 포함하고 있는 뷰에서는 아래 코드와 같이 Fragment를 띄워줄 수 있습니다.
-```
-override fun onCreate(savedInstanceState: Bundle?) {  
-    ...
-    connectFragment()  
-    ...
-}  
-  
+Fragment 내에서는 `onCreateView`를 overriding해야 합니다. 
+
+2. 그 후 Fragment를 띄울 Activity에서 Fragment 설정을 합니다.
+```kotlin
 private fun connectFragment() {  
-    val tempFragment = TempFragment()  
+    val followerFragment = FollowerFragment()  
     val transaction = supportFragmentManager.beginTransaction()  
-    transaction.add(R.id.fragment_temp, tempFragment)  
+    transaction.add(R.id.fragment_follower, followerFragment)  
     transaction.commit()  
 }
 ```
-* * *
-**Fragment의 주요 생명 주기**
-- **onCreateView()** : fragment의 뷰를 그리는 시점. 뷰 관련된 초기화들은 여기에서 이루어진다.
-- **onViewCreated()** : 뷰가 만들어지고 난 후이며, 이때부터 fragment가 activity에 온전히 접근할 수 있다.
-- **onPause()** : 사용자 프래그먼트를 떠나는 첫 신호로 유지하려는 데이터가 있을 경우 여기서 저장한다.
+
+<br>
+<br>
+
+## Level 2 - GridLayoutManager + Multi ViewType
+<p align="center">
+<img src="https://user-images.githubusercontent.com/57510192/115835140-ecac8400-a450-11eb-9039-700268446616.PNG" width="350px">
+</p>
+
+### GridLayout
+GridLayoutManager를 사용하기 위해서는 기존 Recyclerview에서 두 가지 attribute만 추가해주면 됩니다.
+`app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"`, `app:spanCount="3"`입니다. 
+첫 번째 속성은 Grid로 view를 보여주겠다는 것이고, spanCount는 한 줄에 몇 개의 view가 띄워질 것인지에 대한 속성입니다.
+<br>
+
+### Recyclerview에 여러 view 보여주기
+카카오톡과 같은 곳에서 흔하게 사용할 것 같은 Multi Viewtype을 활용하여 GridLayout에 다양한 view를 띄웠습니다.
+1. 먼저 RecyclerView Adapter에서 `getItemViewType`을 overriding하여 넘겨줄 viewtype을 설정합니다.
+```kotlin
+override fun getItemViewType(position: Int): Int {  
+    return when(data[position].viewType){  
+        FollowerInfo.NORMAL_CONTENT -> FollowerInfo.NORMAL_CONTENT  
+  FollowerInfo.AD_CONTENT -> FollowerInfo.AD_CONTENT  
+		else -> throw RuntimeException("View Type Error at getItemViewType")  
+    }  
+}
+```
+2. `onCreateViewHolder`에서는 넘어오는 viewType에 따라 viewholder를 알맞게 처리해줍니다.
+```kotlin
+override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {  
+    val layoutInflater = LayoutInflater.from(parent.context)  
+    return when (viewType) {  
+        FollowerInfo.NORMAL_CONTENT -> {  
+            val binding: ItemFollowerBinding =  
+                DataBindingUtil.inflate(layoutInflater, R.layout.item_follower, parent, false)  
+            FollowerViewHolder(binding)  
+        }  
+        FollowerInfo.AD_CONTENT -> {  
+            val binding: ItemAdvertisementBinding = DataBindingUtil.inflate(  
+                layoutInflater,  
+  R.layout.item_advertisement,  
+  parent,  
+ false  )  
+            AdViewHolder(binding)  
+        }  
+        else -> throw RuntimeException("View Type Error at onCreateViewHolder")  
+    }  
+}
+```
+3. `onBindViewHolder()`에서도 마찬가지로 viewType에 따라 목적에 맞는 viewholder와 연결하여 binding처리를 해줍니다.
+```kotlin
+override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {  
+    val obj = data[position]  
+    when (obj.viewType) {  
+        FollowerInfo.NORMAL_CONTENT -> {  
+            (holder as FollowerViewHolder).bind(obj)  
+        }  
+        FollowerInfo.AD_CONTENT -> {  
+            (holder as AdViewHolder).bind()  
+        }  
+    }  
+}
+```
+4. viewHolder class를 목적에 맞게 여러 개를 만들어야 합니다.
+```kotlin
+class FollowerViewHolder(private val binding: ItemFollowerBinding) :  
+    RecyclerView.ViewHolder(binding.root) {  
+    fun bind(followerInfo: FollowerInfo) {  
+        binding.apply {  
+  follower = followerInfo  
+        }  
+  }  
+}  
+  
+class AdViewHolder(private val binding: ItemAdvertisementBinding) :  
+    RecyclerView.ViewHolder(binding.root) {  
+    fun bind() {  
+        binding.apply {  
+  adContent = "광고!"  
+  }  
+  }  
+}
+```
+- FollowerViewHolder는 github follower들을 보여줄 viewholder입니다.
+- AdViewHolder는 광고 view를 보여줄 viewholder입니다.
+
