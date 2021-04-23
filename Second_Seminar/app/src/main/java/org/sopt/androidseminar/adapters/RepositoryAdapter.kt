@@ -22,7 +22,7 @@ class RepositoryAdapter(private val data: List<RepositoryInfo>) :
         holder.bind(data[position])
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount() = data.size
 
     class RepositoryViewHolder(private val binding: ItemRepositoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
