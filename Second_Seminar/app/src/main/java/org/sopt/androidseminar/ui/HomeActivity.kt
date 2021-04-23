@@ -26,7 +26,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setRepoRv() {
         val repoList = mutableListOf<RepositoryInfo>()
-        repoDataInput(repoList)
+        initData(repoList)
 
         val repoAdapter = RepositoryAdapter(repoList)
         val repoRecyclerView = binding.rvRepository
@@ -42,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun repoDataInput(repoList: MutableList<RepositoryInfo>) {
+    private fun initData(repoList: MutableList<RepositoryInfo>) {
         (1..10).forEach {
             repoList.add(RepositoryInfo("레포지토리 이름".plus(it), "레포지토리 설명".plus(it), "레포지토리 언어".plus(it)))
         }
