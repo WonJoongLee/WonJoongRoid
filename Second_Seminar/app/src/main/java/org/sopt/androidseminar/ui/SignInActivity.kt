@@ -20,7 +20,6 @@ class SignInActivity : AppCompatActivity() {
                     binding.etGithubId.setText(data.getStringExtra("githubID").toString())
                     binding.etGithubPw.setText(data.getStringExtra("pw").toString())
                 }
-
             }
         }
 

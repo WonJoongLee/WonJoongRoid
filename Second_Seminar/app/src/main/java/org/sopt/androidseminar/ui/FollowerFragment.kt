@@ -21,9 +21,7 @@ class FollowerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follower, container, false)
-
         setFollowerRv()
-
         return binding.root
     }
 

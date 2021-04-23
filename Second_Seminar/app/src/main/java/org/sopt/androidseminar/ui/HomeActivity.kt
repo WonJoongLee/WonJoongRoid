@@ -20,9 +20,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d(ACTIVITY_NAME, "onCreate")
-
         setRepoRv()
-
         moreButtonClickedEvent()
     }
 
