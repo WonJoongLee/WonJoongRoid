@@ -45,8 +45,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun repoDataInput(repoList: MutableList<RepositoryInfo>) {
-        for (i in 1..10) {
-            repoList.add(RepositoryInfo("레포지토리 이름".plus(i), "레포지토리 설명".plus(i), "레포지토리 언어".plus(i)))
+        (1..10).forEach {
+            repoList.add(RepositoryInfo("레포지토리 이름".plus(it), "레포지토리 설명".plus(it), "레포지토리 언어".plus(it)))
         }
         //Repository 이름이나 설명이 긴 경우 처리를 보여주기 위해 임시로 추가
         repoList.add(

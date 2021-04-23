@@ -43,11 +43,11 @@ class FollowerFragment : Fragment() {
         followerList.add(FollowerInfo("김지연", "todayiswindy", FollowerInfo.NORMAL_CONTENT))
         followerList.add(FollowerInfo("이현우", "l2hyunwoo", FollowerInfo.NORMAL_CONTENT))
         followerList.add(FollowerInfo("오바마", "obama", FollowerInfo.NORMAL_CONTENT))
-        for (i in 0..10) {
-            if(i%4==0){
+        (0..10).forEach {
+            if (it % 4 == 0) {
                 followerList.add(FollowerInfo("광고", "advertisement", FollowerInfo.AD_CONTENT))
-            }else{
-                followerList.add(FollowerInfo("트럼프".plus(i), "trump", FollowerInfo.NORMAL_CONTENT))
+            } else {
+                followerList.add(FollowerInfo("트럼프".plus(it), "trump", FollowerInfo.NORMAL_CONTENT))
             }
         }
     }
