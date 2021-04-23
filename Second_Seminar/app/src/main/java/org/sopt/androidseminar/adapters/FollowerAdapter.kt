@@ -61,8 +61,7 @@ class FollowerAdapter(private val data: List<FollowerInfo>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(followerInfo: FollowerInfo) {
             binding.apply {
-                name = followerInfo.followerName
-                githubNickName = followerInfo.followerGithubId
+                follower = followerInfo
             }
         }
     }
