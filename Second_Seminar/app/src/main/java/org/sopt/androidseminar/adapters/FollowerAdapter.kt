@@ -6,25 +6,27 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.data.FollowerInfo
-import org.sopt.androidseminar.data.ViewTypeInfo
 import org.sopt.androidseminar.databinding.ItemAdvertisementBinding
 import org.sopt.androidseminar.databinding.ItemFollowerBinding
+import java.lang.RuntimeException
 
 class FollowerAdapter(private val data: List<FollowerInfo>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        lateinit var binding: ItemFollowerBinding
-        when(viewType){
-            ViewTypeInfo.NORMAL_CONTENT -> {
-                binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_follower, parent, false)
+        //lateinit var binding: ItemFollowerBinding
+        return when(viewType){
+            FollowerInfo.NORMAL_CONTENT -> {
+                val binding : ItemFollowerBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_follower, parent, false)
+                FollowerViewHolder(binding)
             }
-            ViewTypeInfo.AD_CONTENT -> {
-                binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_advertisement, parent, false)
+            FollowerInfo.AD_CONTENT -> {
+                val binding : ItemAdvertisementBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_advertisement, parent, false)
+                AdViewHolder(binding)
             }
+            else -> throw RuntimeException("View Type Error")
         }
-        return FollowerViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

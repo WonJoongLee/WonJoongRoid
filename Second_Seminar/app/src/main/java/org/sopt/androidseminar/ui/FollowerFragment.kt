@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.adapters.FollowerAdapter
 import org.sopt.androidseminar.data.FollowerInfo
@@ -40,12 +39,13 @@ class FollowerFragment : Fragment() {
     }
 
     private fun followerDataInput(followerList: MutableList<FollowerInfo>) {
-        followerList.add(FollowerInfo("김서진", "SeojinSeojin"))
-        followerList.add(FollowerInfo("김지연", "todayiswindy"))
-        followerList.add(FollowerInfo("이현우", "l2hyunwoo"))
-        followerList.add(FollowerInfo("오바마", "obama"))
+        followerList.add(FollowerInfo("김서진", "SeojinSeojin", FollowerInfo.NORMAL_CONTENT))
+        followerList.add(FollowerInfo("김지연", "todayiswindy", FollowerInfo.NORMAL_CONTENT))
+        followerList.add(FollowerInfo("이현우", "l2hyunwoo", FollowerInfo.NORMAL_CONTENT))
+        followerList.add(FollowerInfo("광고", "advertisement", FollowerInfo.AD_CONTENT))
+        followerList.add(FollowerInfo("오바마", "obama", FollowerInfo.NORMAL_CONTENT))
         for (i in 0..10) {
-            followerList.add(FollowerInfo("트럼프", "trump"))
+            followerList.add(FollowerInfo("트럼프", "trump", FollowerInfo.NORMAL_CONTENT))
         }
     }
 }
