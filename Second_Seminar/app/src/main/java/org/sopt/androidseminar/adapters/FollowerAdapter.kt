@@ -55,7 +55,7 @@ class FollowerAdapter(private val data: List<FollowerInfo>) :
         }
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount() = data.size
 
     class FollowerViewHolder(private val binding: ItemFollowerBinding) :
         RecyclerView.ViewHolder(binding.root) {
