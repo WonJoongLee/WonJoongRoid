@@ -10,8 +10,8 @@
 <p align="center">
 <img src="https://user-images.githubusercontent.com/57510192/115832679-20d27580-a44e-11eb-9529-e1e99fb0450f.PNG" width="200px">
 </p>
-- adapters : 앱 내에는 두 가지의 리사이클러뷰가 있는데, 각 리사이클러 뷰들의 어댑터가 있습니다.
-- data : data class들이 정의되어 있습니다.
+- adapters : 앱 내에는 두 가지의 리사이클러뷰가 있는데, 각 리사이클러 뷰들의 어댑터가 있습니다.<br>
+- data : data class들이 정의되어 있습니다.<br>
 - ui : Activity들과 Fragment ui가 정의되어 있습니다.
 <br>
 
