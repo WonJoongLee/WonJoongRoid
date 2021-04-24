@@ -5,12 +5,25 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import org.sopt.androidseminar.databinding.ActivityMainBinding
 
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val activityName = "SignInActivity"
+
+    private val signUpActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val data = it.data
+                data?.let {
+                    binding.idET.setText(data.getStringExtra("githubID").toString())
+                    binding.pwET.setText(data.getStringExtra("pw").toString())
+                }
+
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,25 +52,10 @@ class SignInActivity : AppCompatActivity() {
     private fun signUpButtonClickEvent() {
         binding.registerTV.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
-            startActivityForResult(intent, 0)
+            signUpActivityLauncher.launch(intent)
         }
     }
 
-    //값 수신하는 부분
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when(requestCode){
-            0->{
-                if(resultCode == RESULT_OK){
-                    data?.let{
-                        binding.idET.setText(data.getStringExtra("githubID").toString())
-                        binding.pwET.setText(data.getStringExtra("pw").toString())
-                    }
-                }
-            }
-        }
-    }
 
     override fun onStart() {
         super.onStart()

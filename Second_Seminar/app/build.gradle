@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "org.sopt.androidseminar"
-        minSdkVersion 28
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -33,6 +34,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    dataBinding{
+        enabled = true // AAC 중 유일하게 implementation이 필요 없음. 컴파일 될 때 자동으로 필요한 바인딩 클래스를 작성해주기 때문.
+    }
 }
 
 dependencies {
@@ -42,7 +46,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // Kotlin
+    implementation "androidx.fragment:fragment-ktx:1.3.2"
 }

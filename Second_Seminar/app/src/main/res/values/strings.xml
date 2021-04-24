@@ -13,5 +13,14 @@
     <string name="wonjoong_image">WonJoong Image</string>
     <string name="my_github_nickname">WonJoongLee</string>
     <string name="my_name">WonJoong Lee</string>
-    <string name="my_introduce">안녕하세요. 안드로이드 개발을 좋아하는 이원중입니다.</string>
+    <string name="my_introduce">안드로이드를 좋아하는 개발자</string>
+    <string name="label_more">MORE</string>
+    <string name="label_repository_name">레포지토리 이름</string>
+    <string name="title_activity_fragment">FragmentActivity</string>
+    <string name="label_fragment">THIS IS FRAGMENT</string>
+    <string name="label_activity">THIS IS ACTIVITY</string>
+    <string name="label_follower">Follower</string>
+    <string name="label_follower_image">Follower Image</string>
+
+
 </resources>

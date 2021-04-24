@@ -1,4 +1,4 @@
-package org.sopt.androidseminar
+package org.sopt.androidseminar.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -11,25 +11,24 @@ import org.sopt.androidseminar.databinding.ActivitySignUpBinding
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private val activityName = "SignUpActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.d(activityName, "onCreate")
+        Log.d(ACTIVITY_NAME, "onCreate")
 
         signUpButtonClickEvent()
     }
 
     private fun signUpButtonClickEvent() {
-        binding.signUpBt.setOnClickListener {
-            if (isEditTextEmpty()) {
+        binding.btSignUp.setOnClickListener {
+            if (isGithubInfoEditTextEmpty()) {
                 Toast.makeText(this, "빈 칸이 있는지 확인해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, SignUpActivity::class.java)
-                intent.putExtra("githubID", binding.idET.text.toString())
-                intent.putExtra("pw", binding.pwET.text.toString())
+                intent.putExtra("githubID", binding.etGithubId.text.toString())
+                intent.putExtra("pw", binding.etGithubPw.text.toString())
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }
@@ -37,37 +36,40 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     // 하나라도 비어있지 않은 edit text가 있으면 true 반환, 모두 채워져 있다면 false 반환
-    private fun isEditTextEmpty(): Boolean {
-        return binding.nameET.text.isNullOrBlank() || binding.idET.text.isNullOrBlank() || binding.pwET.text.isNullOrBlank()
-    }
+    private fun isGithubInfoEditTextEmpty(): Boolean =
+        binding.etGithubName.text.isNullOrBlank() || binding.etGithubId.text.isNullOrBlank() || binding.etGithubPw.text.isNullOrBlank()
 
     override fun onStart() {
         super.onStart()
-        Log.d(activityName, "onStart")
+        Log.d(ACTIVITY_NAME, "onStart")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d(activityName, "onRestart")
+        Log.d(ACTIVITY_NAME, "onRestart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(activityName, "onResume")
+        Log.d(ACTIVITY_NAME, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(activityName, "onPause")
+        Log.d(ACTIVITY_NAME, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(activityName, "onStop")
+        Log.d(ACTIVITY_NAME, "onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(activityName, "onDestroy")
+        Log.d(ACTIVITY_NAME, "onDestroy")
+    }
+
+    companion object {
+        private const val ACTIVITY_NAME = "SignUpActivity"
     }
 }
