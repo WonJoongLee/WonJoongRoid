@@ -73,7 +73,7 @@ android:maxLines="1"
 ```
 <br>
 
-### Fragment 내의 리사이클러 뷰 처리
+### Fragment 이용하기
 기존에 Fragment에 대해 잘 몰랐는데 이번 기회에 조금 알 수 있게 되었습니다.
 1. 먼저 Fragment xml과 kotlin 파일을 생성하고 정의합니다.
 ```kotlin
