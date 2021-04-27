@@ -25,7 +25,12 @@ SOPT를 통해 좋은 분들을 만나고 공부하게 되어 행복합니다.<b
 </tr>
 <tr>
 <td>3주차</td>
-<td>Design for better application, 과제없음</td>
+<td>Design for better application</td>
 <td>2021.04.24</td>
+</tr>
+<tr>
+<td>4주차</td>
+<td>추가 예정</td>
+<td>2021.05.01</td>
 </tr>
 </table>
