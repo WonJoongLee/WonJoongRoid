@@ -29,11 +29,11 @@ class HomeActivity : AppCompatActivity() {
         val repoList = mutableListOf<RepositoryInfo>()
         initData(repoList)
 
-        val repoAdapter = RepositoryAdapter(repoList)
+        val repoAdapter = RepositoryAdapter()
         val repoRecyclerView = binding.rvRepository
         repoRecyclerView.adapter = repoAdapter
         repoRecyclerView.setHasFixedSize(false)
-        repoAdapter.notifyDataSetChanged()
+        repoAdapter.setItemList(repoList)
     }
 
     private fun moreButtonClickedEvent() {
