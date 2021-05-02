@@ -29,11 +29,11 @@ class FollowerFragment : Fragment() {
         val followerList = mutableListOf<FollowerInfo>()
         followerDataInput(followerList)
 
-        val followerAdapter = FollowerAdapter(followerList)
+        val followerAdapter = FollowerAdapter()
         val followerRecyclerView = binding.rvFollower
         followerRecyclerView.adapter = followerAdapter
         followerRecyclerView.setHasFixedSize(false)
-        followerAdapter.notifyDataSetChanged()
+        followerAdapter.setItemList(followerList)
     }
 
     private fun followerDataInput(followerList: MutableList<FollowerInfo>) {

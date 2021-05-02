@@ -8,8 +8,10 @@ import org.sopt.androidseminar.R
 import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ItemRepositoryBinding
 
-class RepositoryAdapter(private val data: List<RepositoryInfo>) :
+class RepositoryAdapter() :
     RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
+
+    private var repoList = mutableListOf<RepositoryInfo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -19,10 +21,16 @@ class RepositoryAdapter(private val data: List<RepositoryInfo>) :
     }
 
     override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.bind(repoList[position])
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = repoList.size
+
+    fun setItemList(newList:MutableList<RepositoryInfo>){
+        repoList.clear()
+        repoList.addAll(newList)
+        notifyDataSetChanged()
+    }
 
     class RepositoryViewHolder(private val binding: ItemRepositoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
