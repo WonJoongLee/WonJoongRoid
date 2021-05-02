@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.sopt.androidseminar.LifecycleObserver
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.adapters.RepositoryAdapter
 import org.sopt.androidseminar.data.RepositoryInfo
@@ -19,9 +20,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.d(ACTIVITY_NAME, "onCreate")
         setRepoRv()
         moreButtonClickedEvent()
+        LifecycleObserver(javaClass.simpleName, this.lifecycle).registerLogger()
     }
 
     private fun setRepoRv() {
@@ -54,39 +55,5 @@ class HomeActivity : AppCompatActivity() {
                 "레포지토리 언어"
             )
         )
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d(ACTIVITY_NAME, "onStart")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.d(ACTIVITY_NAME, "onRestart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(ACTIVITY_NAME, "onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(ACTIVITY_NAME, "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(ACTIVITY_NAME, "onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(ACTIVITY_NAME, "onDestroy")
-    }
-
-    companion object {
-        private const val ACTIVITY_NAME = "HomeActivity"
     }
 }

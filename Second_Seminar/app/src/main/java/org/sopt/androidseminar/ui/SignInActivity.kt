@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import org.sopt.androidseminar.LifecycleObserver
 import org.sopt.androidseminar.databinding.ActivityMainBinding
 
 class SignInActivity : AppCompatActivity() {
@@ -27,10 +28,11 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root) // 주의, 코틀린에서 프로퍼티기 때문에 .root로 바로 getter 호출이 된다.
-        Log.d(ACTIVITY_NAME, "onCreate")
+        //Log.d(ACTIVITY_NAME, "onCreate")
 
         loginButtonClickEvent()
         signUpButtonClickEvent()
+        LifecycleObserver(javaClass.simpleName, this.lifecycle).registerLogger()
     }
 
     private fun loginButtonClickEvent() {
@@ -53,39 +55,5 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpActivity::class.java)
             signUpActivityLauncher.launch(intent)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d(ACTIVITY_NAME, "onStart")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.d(ACTIVITY_NAME, "onRestart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(ACTIVITY_NAME, "onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(ACTIVITY_NAME, "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(ACTIVITY_NAME, "onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(ACTIVITY_NAME, "onDestroy")
-    }
-
-    companion object {
-        private const val ACTIVITY_NAME = "SignInActivity"
     }
 }
