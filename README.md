@@ -29,8 +29,8 @@ SOPT를 통해 좋은 분들을 만나고 공부하게 되어 행복합니다.<b
 <td>2021.04.24</td>
 </tr>
 <tr>
-<td>4주차</td>
-<td>추가 예정</td>
+<td><a href="https://github.com/BE-SOPT-Android-First-Class/WonJoongRoid/tree/master/Fourth_Seminar">4주차</a></td>
+<td>Retrofit2로 서버와 통신하기</td>
 <td>2021.05.08</td>
 </tr>
 </table>
