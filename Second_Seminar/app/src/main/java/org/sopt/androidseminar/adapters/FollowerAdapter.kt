@@ -6,14 +6,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.data.FollowerInfo
+import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ItemAdvertisementBinding
 import org.sopt.androidseminar.databinding.ItemFollowerBinding
 
-class FollowerAdapter(private val data: List<FollowerInfo>) :
+class FollowerAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var followerList = mutableListOf<FollowerInfo>()
+
     override fun getItemViewType(position: Int): Int {
-        return when(data[position].viewType){
+        return when (followerList[position].viewType) {
             FollowerInfo.NORMAL_CONTENT -> FollowerInfo.NORMAL_CONTENT
             FollowerInfo.AD_CONTENT -> FollowerInfo.AD_CONTENT
             else -> throw RuntimeException("View Type Error at getItemViewType")
@@ -44,7 +47,7 @@ class FollowerAdapter(private val data: List<FollowerInfo>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val obj = data[position]
+        val obj = followerList[position]
         when (obj.viewType) {
             FollowerInfo.NORMAL_CONTENT -> {
                 (holder as FollowerViewHolder).bind(obj)
@@ -55,7 +58,13 @@ class FollowerAdapter(private val data: List<FollowerInfo>) :
         }
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = followerList.size
+
+    fun setItemList(newList: MutableList<FollowerInfo>) {
+        followerList.clear()
+        followerList.addAll(newList)
+        notifyDataSetChanged()
+    }
 
     class FollowerViewHolder(private val binding: ItemFollowerBinding) :
         RecyclerView.ViewHolder(binding.root) {
