@@ -7,7 +7,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import org.sopt.androidseminar.LifecycleObserver
+import org.sopt.androidseminar.api.ServiceCreator
+import org.sopt.androidseminar.data.request.RequestLoginData
+import org.sopt.androidseminar.data.response.ResponseLoginData
 import org.sopt.androidseminar.databinding.ActivityMainBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignInActivity : AppCompatActivity() {
 
@@ -41,8 +47,34 @@ class SignInActivity : AppCompatActivity() {
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요!", Toast.LENGTH_SHORT)
                     .show()
             } else { // 모두 차 있다면,
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
+                val requestLoginData = RequestLoginData(
+                    email = binding.etGithubId.text.toString(),
+                    password = binding.etGithubPw.text.toString()
+                )
+                val call: Call<ResponseLoginData> =
+                    ServiceCreator.soptService.postLogin(requestLoginData)
+                call.enqueue(object : Callback<ResponseLoginData> {
+                    override fun onResponse(
+                        call: Call<ResponseLoginData>,
+                        response: Response<ResponseLoginData>
+                    ) {
+                        if (response.isSuccessful) {
+                            val data = response.body()?.data
+                            Toast.makeText(
+                                this@SignInActivity,
+                                data?.user_nickname,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
+                        Log.e("NetworkText", "error:$t")
+                    }
+
+                })
+//                val intent = Intent(this, HomeActivity::class.java)
+//                startActivity(intent)
             }
         }
     }
