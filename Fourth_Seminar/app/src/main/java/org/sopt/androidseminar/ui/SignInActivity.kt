@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import org.sopt.androidseminar.LifecycleObserver
+import org.sopt.androidseminar.util.LifecycleObserver
 import org.sopt.androidseminar.api.soptlogin.ServiceCreator
 import org.sopt.androidseminar.data.request.RequestLoginData
 import org.sopt.androidseminar.data.response.ResponseLoginData

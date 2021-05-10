@@ -1,4 +1,4 @@
-package org.sopt.androidseminar
+package org.sopt.androidseminar.util
 
 import android.util.Log
 import androidx.lifecycle.Lifecycle

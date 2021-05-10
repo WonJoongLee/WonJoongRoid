@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import okhttp3.Response
-import org.sopt.androidseminar.LifecycleObserver
+import org.sopt.androidseminar.util.LifecycleObserver
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.adapters.RepositoryAdapter
 import org.sopt.androidseminar.api.github.repository.RepoServiceCreator
