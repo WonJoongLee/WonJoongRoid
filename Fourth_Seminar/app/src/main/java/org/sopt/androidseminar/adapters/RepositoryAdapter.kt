@@ -1,5 +1,9 @@
 package org.sopt.androidseminar.adapters
 
+import android.graphics.Typeface
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -36,7 +40,17 @@ class RepositoryAdapter() :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryInfo: RepositoryInfo) {
             binding.apply {
-                repo = repositoryInfo
+                //repo = repositoryInfo
+                tvRepositoryName.text = repositoryInfo.repoName
+                tvRepositoryLanguage.text = repositoryInfo.repoLang
+                if(repositoryInfo.repoInfo.isEmpty()){
+                    val str = SpannableStringBuilder()
+                    str.append("No Description")
+                    str.setSpan(StyleSpan(Typeface.ITALIC), 0, str.toString().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    binding.tvRepositoryDetail.text = str
+                }else{
+                    tvRepositoryDetail.text = repositoryInfo.repoInfo
+                }
             }
         }
     }

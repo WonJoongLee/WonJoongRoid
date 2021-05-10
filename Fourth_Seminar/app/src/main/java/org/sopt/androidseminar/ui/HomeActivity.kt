@@ -39,11 +39,21 @@ class HomeActivity : AppCompatActivity() {
                     val dataSize = responsedData?.size ?: 0
                     //val noDescString : Spannable = "No Description".toSpannable()
                     //noDescString.setSpan(StyleSpan(Typeface.ITALIC), 0, noDescString.toString().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    for(i in 0 until dataSize){
-                        repoList.add(RepositoryInfo(responsedData?.get(i)?.repoName?:"", responsedData?.get(i)?.repoDescription?:"No Description", responsedData?.get(i)?.repoLang?:""))
+                    for (i in 0 until dataSize) {
+                        repoList.add(
+                            RepositoryInfo(
+                                responsedData?.get(i)?.repoName ?: "",
+                                responsedData?.get(i)?.repoDescription ?: "",
+                                responsedData?.get(i)?.repoLang ?: ""
+                            )
+                        )
                         Log.i("RepoName", responsedData?.get(i)?.repoName ?: "Empty Name")
+                        if (i == dataSize - 1) {
+                            Log.e("데이터가져오기", "끝!")
+                        }
                     }
-                    setRepoRv()
+                    runOnUiThread { setRepoRv() }
+
                 } else {
                     Log.e("error", "getRepos() error")
                 }
@@ -56,11 +66,16 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setRepoRv() {
-        val repoAdapter = RepositoryAdapter()
-        val repoRecyclerView = binding.rvRepository
-        repoRecyclerView.adapter = repoAdapter
-        repoRecyclerView.setHasFixedSize(false)
-        repoAdapter.setItemList(repoList)
+        runOnUiThread {
+            val repoAdapter = RepositoryAdapter()
+            val repoRecyclerView = binding.rvRepository
+            repoAdapter.setItemList(repoList)
+            repoRecyclerView.smoothScrollToPosition(0)
+            repoAdapter.notifyDataSetChanged()
+            repoRecyclerView.adapter = repoAdapter
+            repoRecyclerView.setHasFixedSize(false)
+            Log.e("연결", "끝!")
+        }
     }
 
     private fun moreButtonClickedEvent() {

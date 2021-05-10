@@ -1,3 +1,3 @@
 package org.sopt.androidseminar.data
 
-data class RepositoryInfo(val repoName : String, val repoInfo : String, val repoLang : String)
+data class RepositoryInfo(var repoName : String, var repoInfo : String, var repoLang : String)

@@ -5,21 +5,10 @@
 
     <data>
 
-        <variable
-            name="repo"
-            type="org.sopt.androidseminar.data.RepositoryInfo" />
+<!--        <variable-->
+<!--            name="repo"-->
+<!--            type="org.sopt.androidseminar.data.RepositoryInfo" />-->
 
-        <variable
-            name="repoName"
-            type="String" />
-
-        <variable
-            name="repoInfo"
-            type="String" />
-
-        <variable
-            name="repoLang"
-            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +26,7 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:text="@{repo.repoName}"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +41,7 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{repo.repoInfo}"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@{repo.repoLang}"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
