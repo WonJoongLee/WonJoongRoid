@@ -82,5 +82,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <ProgressBar
+        android:id="@+id/progressbar_repo_rv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/rv_repository"
+        app:layout_constraintStart_toStartOf="@id/rv_repository"
+        app:layout_constraintEnd_toEndOf="@id/rv_repository"
+        app:layout_constraintBottom_toBottomOf="@id/rv_repository"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

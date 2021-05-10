@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import org.sopt.androidseminar.util.LifecycleObserver
 import org.sopt.androidseminar.adapters.RepositoryAdapter
 import org.sopt.androidseminar.api.github.repository.RepoServiceCreator
@@ -74,6 +75,7 @@ class HomeActivity : AppCompatActivity() {
             repoAdapter.notifyDataSetChanged()
             repoRecyclerView.adapter = repoAdapter
             repoRecyclerView.setHasFixedSize(false)
+            binding.progressbarRepoRv.visibility = View.GONE
             Log.e("연결", "끝!")
         }
     }
