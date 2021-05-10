@@ -1,4 +1,4 @@
-package org.sopt.androidseminar.api
+package org.sopt.androidseminar.api.soptlogin
 
 import org.sopt.androidseminar.data.request.RequestLoginData
 import org.sopt.androidseminar.data.response.ResponseLoginData

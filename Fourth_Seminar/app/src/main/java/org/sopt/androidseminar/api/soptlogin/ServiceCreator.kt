@@ -1,4 +1,4 @@
-package org.sopt.androidseminar.api
+package org.sopt.androidseminar.api.soptlogin
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

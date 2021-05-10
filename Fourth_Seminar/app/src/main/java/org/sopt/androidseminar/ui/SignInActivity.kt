@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import org.sopt.androidseminar.LifecycleObserver
-import org.sopt.androidseminar.api.ServiceCreator
+import org.sopt.androidseminar.api.soptlogin.ServiceCreator
 import org.sopt.androidseminar.data.request.RequestLoginData
 import org.sopt.androidseminar.data.response.ResponseLoginData
 import org.sopt.androidseminar.databinding.ActivityMainBinding
@@ -65,18 +65,27 @@ class SignInActivity : AppCompatActivity() {
                                 data?.user_nickname,
                                 Toast.LENGTH_SHORT
                             ).show()
+                            startHomeActivity()
+                        } else {
+                            Toast.makeText(
+                                this@SignInActivity,
+                                "아이디/비밀번호를 확인해주세요!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
 
                     override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
                         Log.e("NetworkText", "error:$t")
                     }
-
                 })
-//                val intent = Intent(this, HomeActivity::class.java)
-//                startActivity(intent)
             }
         }
+    }
+
+    private fun startHomeActivity() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
     }
 
     private fun isIdPwETEmpty() =
