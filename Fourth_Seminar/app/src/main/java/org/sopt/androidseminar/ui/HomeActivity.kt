@@ -4,12 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import okhttp3.Response
 import org.sopt.androidseminar.util.LifecycleObserver
-import org.sopt.androidseminar.R
 import org.sopt.androidseminar.adapters.RepositoryAdapter
 import org.sopt.androidseminar.api.github.repository.RepoServiceCreator
 import org.sopt.androidseminar.data.RepositoryInfo
@@ -21,19 +16,18 @@ import retrofit2.Callback
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+    private val repoList = mutableListOf<RepositoryInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setRepoRv()
+        getRepos()
         moreButtonClickedEvent()
         LifecycleObserver(javaClass.simpleName, this.lifecycle).registerLogger()
-        getRepos()
     }
 
     private fun getRepos() {
-        //val requestRepoData = ResponseRepoData
         val call: Call<List<ResponseRepoData>> = RepoServiceCreator.repoService.getRepos()
         call.enqueue(object : Callback<List<ResponseRepoData>> {
             override fun onResponse(
@@ -42,7 +36,14 @@ class HomeActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     val responsedData = response.body()
-
+                    val dataSize = responsedData?.size ?: 0
+                    //val noDescString : Spannable = "No Description".toSpannable()
+                    //noDescString.setSpan(StyleSpan(Typeface.ITALIC), 0, noDescString.toString().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    for(i in 0 until dataSize){
+                        repoList.add(RepositoryInfo(responsedData?.get(i)?.repoName?:"", responsedData?.get(i)?.repoDescription?:"No Description", responsedData?.get(i)?.repoLang?:""))
+                        Log.i("RepoName", responsedData?.get(i)?.repoName ?: "Empty Name")
+                    }
+                    setRepoRv()
                 } else {
                     Log.e("error", "getRepos() error")
                 }
@@ -55,9 +56,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setRepoRv() {
-        val repoList = mutableListOf<RepositoryInfo>()
-        initData(repoList)
-
         val repoAdapter = RepositoryAdapter()
         val repoRecyclerView = binding.rvRepository
         repoRecyclerView.adapter = repoAdapter
@@ -70,25 +68,5 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, FragmentActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun initData(repoList: MutableList<RepositoryInfo>) {
-        (1..10).forEach {
-            repoList.add(
-                RepositoryInfo(
-                    "레포지토리 이름".plus(it),
-                    "레포지토리 설명".plus(it),
-                    "레포지토리 언어".plus(it)
-                )
-            )
-        }
-        //Repository 이름이나 설명이 긴 경우 처리를 보여주기 위해 임시로 추가
-        repoList.add(
-            RepositoryInfo(
-                "레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름",
-                "레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명",
-                "레포지토리 언어"
-            )
-        )
     }
 }
