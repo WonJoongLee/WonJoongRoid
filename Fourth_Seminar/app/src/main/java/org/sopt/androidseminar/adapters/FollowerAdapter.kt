@@ -60,7 +60,7 @@ class FollowerAdapter() :
 
     override fun getItemCount() = followerList.size
 
-    fun setItemList(newList: MutableList<FollowerInfo>) {
+    fun setItemList(newList: List<FollowerInfo>) {
         followerList.clear()
         followerList.addAll(newList)
         notifyDataSetChanged()

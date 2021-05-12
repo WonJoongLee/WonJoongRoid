@@ -1,6 +1,6 @@
 package org.sopt.androidseminar.api
 
-import org.sopt.androidseminar.api.github.RepoService
+import org.sopt.androidseminar.api.github.GithubService
 import org.sopt.androidseminar.api.soptlogin.SoptService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,5 +19,5 @@ object ServiceCreator {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     val soptService: SoptService = soptRetrofit.create(SoptService::class.java)
-    val repoService: RepoService = githubRetrofit.create(RepoService::class.java)
+    val githubService: GithubService = githubRetrofit.create(GithubService::class.java)
 }

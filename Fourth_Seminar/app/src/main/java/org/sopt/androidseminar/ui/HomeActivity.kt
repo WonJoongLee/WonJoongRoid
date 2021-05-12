@@ -28,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun getRepos() {
-        val call: Call<List<RepositoryInfo>> = ServiceCreator.repoService.getRepos()
+        val call: Call<List<RepositoryInfo>> = ServiceCreator.githubService.getRepos()
         call.enqueue(object : Callback<List<RepositoryInfo>> {
             override fun onResponse(
                 call: Call<List<RepositoryInfo>>,
