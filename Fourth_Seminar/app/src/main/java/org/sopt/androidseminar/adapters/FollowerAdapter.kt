@@ -1,16 +1,18 @@
 package org.sopt.androidseminar.adapters
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.data.FollowerInfo
-import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ItemAdvertisementBinding
 import org.sopt.androidseminar.databinding.ItemFollowerBinding
 
-class FollowerAdapter() :
+class FollowerAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var followerList = mutableListOf<FollowerInfo>()
@@ -69,8 +71,15 @@ class FollowerAdapter() :
     class FollowerViewHolder(private val binding: ItemFollowerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(followerInfo: FollowerInfo) {
-            binding.apply {
-                follower = followerInfo
+            binding.follower = followerInfo
+            Glide
+                .with(binding.ivFollowerPicture.context)
+                .load(followerInfo.followerImgUrl)
+                .centerCrop()
+                .into(binding.ivFollowerPicture)
+            binding.clFollowerItemParentView.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(followerInfo.followerHtmlUrl))
+                binding.clFollowerItemParentView.context.startActivity(intent)
             }
         }
     }

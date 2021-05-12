@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.sopt.androidseminar">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,8 +14,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.FragmentActivity" />
         <activity android:name=".ui.SignUpActivity" />
-        <activity android:name=".ui.HomeActivity" >
-        </activity>
+        <activity android:name=".ui.HomeActivity"/>
         <activity android:name=".ui.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

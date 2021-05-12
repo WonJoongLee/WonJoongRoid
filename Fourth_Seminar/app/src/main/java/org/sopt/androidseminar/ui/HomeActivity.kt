@@ -11,6 +11,7 @@ import org.sopt.androidseminar.api.ServiceCreator
 import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ActivityHomeBinding
 import org.sopt.androidseminar.util.RvItemDecoration
+import org.sopt.androidseminar.util.RvItemDecoration.Companion.REPO_RV_TYPE
 import retrofit2.Call
 import retrofit2.Callback
 
@@ -57,7 +58,7 @@ class HomeActivity : AppCompatActivity() {
         with(repoRecyclerView) {
             adapter = repoAdapter
             setHasFixedSize(true)
-            addItemDecoration(RvItemDecoration(20))
+            addItemDecoration(RvItemDecoration(20, REPO_RV_TYPE))
         }
         binding.progressbarRepoRv.visibility = View.GONE
     }
@@ -68,4 +69,5 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }
