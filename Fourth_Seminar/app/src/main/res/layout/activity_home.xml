@@ -90,6 +90,7 @@
         app:layout_constraintStart_toStartOf="@id/rv_repository"
         app:layout_constraintEnd_toEndOf="@id/rv_repository"
         app:layout_constraintBottom_toBottomOf="@id/rv_repository"
+        android:indeterminateTint="@color/dimgray"
         />
 
 

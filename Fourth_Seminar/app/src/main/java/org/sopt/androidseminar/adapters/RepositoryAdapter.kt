@@ -42,22 +42,30 @@ class RepositoryAdapter :
             binding.apply {
                 //repo = repositoryInfo
                 tvRepositoryName.text = repositoryInfo.repoName
-                tvRepositoryLanguage.text = repositoryInfo.repoLang
+                if (repositoryInfo.repoLang.isNullOrEmpty()) {
+                    tvRepositoryLanguage.text = setSpanString("No Language")
+                } else {
+                    tvRepositoryLanguage.text = repositoryInfo.repoLang
+                }
                 // 만약 레포지토리 설명이 없으면 Github처럼 No Description을 italic체로 보여준다.
                 if (repositoryInfo.repoDescription.isNullOrEmpty()) {
-                    val noDescriptionStr = SpannableStringBuilder()
-                    noDescriptionStr.append("No Description")
-                    noDescriptionStr.setSpan(
-                        StyleSpan(Typeface.ITALIC),
-                        0,
-                        noDescriptionStr.toString().length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    binding.tvRepositoryDetail.text = noDescriptionStr
+                    tvRepositoryDetail.text = setSpanString("No Description")
                 } else {
                     tvRepositoryDetail.text = repositoryInfo.repoDescription
                 }
             }
+        }
+
+        private fun setSpanString(str: String): SpannableStringBuilder {
+            val noDescriptionStr = SpannableStringBuilder()
+            noDescriptionStr.append(str)
+            noDescriptionStr.setSpan(
+                StyleSpan(Typeface.ITALIC),
+                0,
+                noDescriptionStr.toString().length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            return noDescriptionStr
         }
     }
 }

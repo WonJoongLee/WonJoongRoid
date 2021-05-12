@@ -1,4 +1,4 @@
-package org.sopt.androidseminar.api.github.repository
+package org.sopt.androidseminar.api.github
 
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.data.RepositoryInfo

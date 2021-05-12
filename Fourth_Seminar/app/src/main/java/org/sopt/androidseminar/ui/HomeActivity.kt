@@ -7,9 +7,10 @@ import android.util.Log
 import android.view.View
 import org.sopt.androidseminar.util.LifecycleObserver
 import org.sopt.androidseminar.adapters.RepositoryAdapter
-import org.sopt.androidseminar.api.github.repository.RepoServiceCreator
+import org.sopt.androidseminar.api.ServiceCreator
 import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ActivityHomeBinding
+import org.sopt.androidseminar.util.RvItemDecoration
 import retrofit2.Call
 import retrofit2.Callback
 
@@ -27,15 +28,15 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun getRepos() {
-        val call: Call<List<RepositoryInfo>> = RepoServiceCreator.repoService.getRepos()
+        val call: Call<List<RepositoryInfo>> = ServiceCreator.repoService.getRepos()
         call.enqueue(object : Callback<List<RepositoryInfo>> {
             override fun onResponse(
                 call: Call<List<RepositoryInfo>>,
                 response: retrofit2.Response<List<RepositoryInfo>>
             ) {
                 if (response.isSuccessful) {
-                    if (response.body() != null) {
-                        setRepoRv(response.body()!!)
+                    response.body()?.let {
+                        setRepoRv(it)
                     }
                 } else {
                     Log.e("error", "getRepos() error")
@@ -52,10 +53,12 @@ class HomeActivity : AppCompatActivity() {
         val repoAdapter = RepositoryAdapter()
         val repoRecyclerView = binding.rvRepository
         repoAdapter.setItemList(repoList)
-        repoRecyclerView.smoothScrollToPosition(0)
         repoAdapter.notifyDataSetChanged()
-        repoRecyclerView.adapter = repoAdapter
-        repoRecyclerView.setHasFixedSize(false)
+        with(repoRecyclerView) {
+            adapter = repoAdapter
+            setHasFixedSize(true)
+            addItemDecoration(RvItemDecoration(20))
+        }
         binding.progressbarRepoRv.visibility = View.GONE
     }
 
