@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import org.sopt.androidseminar.util.LifecycleObserver
 import org.sopt.androidseminar.databinding.ActivitySignUpBinding
+import org.sopt.androidseminar.util.toast
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -24,7 +25,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun signUpButtonClickEvent() {
         binding.btSignUp.setOnClickListener {
             if (isGithubInfoEditTextEmpty()) {
-                Toast.makeText(this, "빈 칸이 있는지 확인해주세요", Toast.LENGTH_SHORT).show()
+                toast("빈 칸이 있는지 확인해주세요")
             } else {
                 val intent = Intent(this, SignUpActivity::class.java)
                 intent.putExtra("githubID", binding.etGithubId.text.toString())

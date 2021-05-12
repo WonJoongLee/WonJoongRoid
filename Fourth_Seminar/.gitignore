@@ -1,4 +1,4 @@
-app/src/main/java/org/sopt/androidseminar/ImportantKeys.kt
+app/src/main/res/values/secret_keys.xml
 
 # Created by https://www.toptal.com/developers/gitignore/api/androidstudio,android
 # Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,android

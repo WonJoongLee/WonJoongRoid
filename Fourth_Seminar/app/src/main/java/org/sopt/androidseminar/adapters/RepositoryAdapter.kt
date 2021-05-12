@@ -12,7 +12,7 @@ import org.sopt.androidseminar.R
 import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ItemRepositoryBinding
 
-class RepositoryAdapter() :
+class RepositoryAdapter :
     RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
 
     private var repoList = mutableListOf<RepositoryInfo>()
@@ -30,7 +30,7 @@ class RepositoryAdapter() :
 
     override fun getItemCount() = repoList.size
 
-    fun setItemList(newList:MutableList<RepositoryInfo>){
+    fun setItemList(newList: List<RepositoryInfo>) {
         repoList.clear()
         repoList.addAll(newList)
         notifyDataSetChanged()
@@ -43,13 +43,19 @@ class RepositoryAdapter() :
                 //repo = repositoryInfo
                 tvRepositoryName.text = repositoryInfo.repoName
                 tvRepositoryLanguage.text = repositoryInfo.repoLang
-                if(repositoryInfo.repoInfo.isEmpty()){
-                    val str = SpannableStringBuilder()
-                    str.append("No Description")
-                    str.setSpan(StyleSpan(Typeface.ITALIC), 0, str.toString().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    binding.tvRepositoryDetail.text = str
-                }else{
-                    tvRepositoryDetail.text = repositoryInfo.repoInfo
+                // 만약 레포지토리 설명이 없으면 Github처럼 No Description을 italic체로 보여준다.
+                if (repositoryInfo.repoDescription.isNullOrEmpty()) {
+                    val noDescriptionStr = SpannableStringBuilder()
+                    noDescriptionStr.append("No Description")
+                    noDescriptionStr.setSpan(
+                        StyleSpan(Typeface.ITALIC),
+                        0,
+                        noDescriptionStr.toString().length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    binding.tvRepositoryDetail.text = noDescriptionStr
+                } else {
+                    tvRepositoryDetail.text = repositoryInfo.repoDescription
                 }
             }
         }
