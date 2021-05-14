@@ -58,7 +58,7 @@ class SignInActivity : AppCompatActivity() {
                     ) {
                         if (response.isSuccessful) {
                             val data = response.body()?.data
-                            toast(data?.user_nickname ?: "")
+                            toast(data?.user_nickname + " 로그인 성공")
                             startHomeActivity()
                         } else {
                             toast("아이디/비밀번호를 확인해주세요!")

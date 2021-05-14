@@ -1,5 +1,6 @@
 package org.sopt.androidseminar.adapters
 
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import org.json.JSONObject
 import org.sopt.androidseminar.R
 import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ItemRepositoryBinding
@@ -40,12 +42,13 @@ class RepositoryAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryInfo: RepositoryInfo) {
             binding.apply {
-                //repo = repositoryInfo
                 tvRepositoryName.text = repositoryInfo.repoName
                 if (repositoryInfo.repoLang.isNullOrEmpty()) {
                     tvRepositoryLanguage.text = setSpanString("No Language")
+                    tvRepositoryLanguage.setTextColor(Color.GRAY)
                 } else {
                     tvRepositoryLanguage.text = repositoryInfo.repoLang
+                    tvRepositoryLanguage.setTextColor(Color.parseColor(setColorStr(repositoryInfo.repoLang)))
                 }
                 // 만약 레포지토리 설명이 없으면 Github처럼 No Description을 italic체로 보여준다.
                 if (repositoryInfo.repoDescription.isNullOrEmpty()) {
@@ -66,6 +69,20 @@ class RepositoryAdapter :
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             return noDescriptionStr
+        }
+
+        private fun setColorStr(str: String): String {
+            val assetManager = binding.tvRepositoryLanguage.context.resources.assets // assets가 root
+            val inputStream = assetManager.open("colors.json")
+            val jsonString = inputStream.bufferedReader().use { it.readText() }
+            val jObject = JSONObject(jsonString)
+            var colorStr = ""
+            jObject.keys().forEach {
+                if (it == str) {
+                    colorStr = jObject.get(it).toString()
+                }
+            }
+            return colorStr
         }
     }
 }
