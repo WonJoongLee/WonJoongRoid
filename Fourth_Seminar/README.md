@@ -211,9 +211,27 @@ companion object를 public으로 설정해서 어떤 리사이클러 뷰에서 �
   android:color="@color/black" />
 ```
 
+### 내장 Assets 사용해보기
+```kotlin
+private fun setColorStr(str: String): String {  
+    val assetManager = binding.tvRepositoryLanguage.context.resources.assets // assets가 root  
+    val inputStream = assetManager.open("colors.json")  
+    val jsonString = inputStream.bufferedReader().use { it.readText() }  
+    val jObject = JSONObject(jsonString)  
+    var colorStr = ""  
+    jObject.keys().forEach {  
+    if (it == str) {  
+            colorStr = jObject.get(it).toString()  
+    }  
+  }  
+  return colorStr  
+}
+```
+assets 폴더 아래에 있는 colors.json을 통해 각 레포지토리 언어에 색을 추가했습니다.
+
 ## 4주차 이원중 패치 내역
 1. 서버와 통신하는 법을 몰랐었는데, 레트로핏을 통해 서버와 통신하는 기초를 학습했습니다.
 2. interface, singleton object이 무엇인지와 쓰는 방법을 학습했습니다.
 3. API 사용하는 법을 학습했습니다.
-4. drawable xml을 통해 버튼 배경과 리플 효과를 추가해보았지만, 더 공부를 해야합니다.
-
+4. drawable xml을 통해 버튼 배경과 리플 효과를 추가해보았지만, 학습을 더 해야 합니다.
+5. 내장 assets을 사용해봤지만, 처음 써보기도 했고 구글링해서 쓴 코드이기 때문에 많은 학습이 요구됩니다.
