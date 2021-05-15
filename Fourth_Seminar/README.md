@@ -1,57 +1,95 @@
 ﻿# 2주차
 ### 구동영상
 <p align="center">
-<img src="https://user-images.githubusercontent.com/57510192/115836891-f7681880-a452-11eb-9ded-acb7c1216069.gif" width="300px">
+<img src="https://user-images.githubusercontent.com/57510192/118343551-b7351b00-b564-11eb-9015-fa8fc7ccbfd3.gif" width="300px">
 </p>
 
-2주차에서는 `Fragment`, `RecyclerView`, `Data & UI`, `List`를 배웠습니다.
+4주차에서는 `Retrofit2`로 서버와 통신하는 법을 배웠습니다. 
 <br>
 ### 폴더 구조
 <p align="center">
-<img src="https://user-images.githubusercontent.com/57510192/115832679-20d27580-a44e-11eb-9529-e1e99fb0450f.PNG" width="200px">
+<img src="https://user-images.githubusercontent.com/57510192/118217413-619f3680-b4b0-11eb-97c8-5f877e449694.PNG" width="200px">
 </p>
-- adapters : 앱 내에는 두 가지의 리사이클러뷰가 있는데, 각 리사이클러 뷰들의 어댑터가 있습니다.<br>
-- data : data class들이 정의되어 있습니다.<br>
-- ui : Activity들과 Fragment ui가 정의되어 있습니다.
+ 
+## Level 1 - 로그인 / 회원가입 통신 구현
+레트로핏을 이용해서 로그인과 회원가입 통신을 구현했습니다.
 <br>
 
-## Level 1 - 리사이클러뷰 구현 + Fragment
-리사이클러뷰는 크게 `adapter`, `data class`, activity에서 adapter를 설정해주는 코드로 이루어져 있습니다.
-<br>
+### 회원가입 구현 부분
+Retrofit2를 이용하기 위해서는 ServiceCreator singleton object와 Service Interface를 만들어줘야 합니다.
 
-### adapter 구현 부분
-adapter는 기본적으로 `onCreateViewHolder`, `onBindViewHolder`, `getItemCount`로 이루어져 있고, 	추가적으로 Custom `ViewHolder` class를 정의합니다. 
-
-RepositoryAdapter.kt
+**ServiceCreator.kt**
 ```kotlin
-class RepositoryAdapter(private val data: List<RepositoryInfo>) :  
-    RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {  
-  
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {  
-        val layoutInflater = LayoutInflater.from(parent.context)  
-        val binding: ItemRepositoryBinding =  
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_repository, parent, false)  
-        return RepositoryViewHolder(binding)  
-    }  
-  
-    override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {  
-        holder.bind(data[position])  
-    }  
-  
-    override fun getItemCount() = data.size  
-  
-  class RepositoryViewHolder(private val binding: ItemRepositoryBinding) :  
-        RecyclerView.ViewHolder(binding.root) {  
-        fun bind(repositoryInfo: RepositoryInfo) {  
-            binding.apply {  
-  repo = repositoryInfo  
-            }  
-  }  
-    }  
+object ServiceCreator {  
+    private const val SOPT_BASE_URL = "http://cherishserver.com"  
+  private const val GITHUB_BASE_URL = "http://api.github.com"  
+  private val soptRetrofit: Retrofit =  
+        Retrofit.Builder()  
+            .baseUrl(SOPT_BASE_URL)  
+            .addConverterFactory(GsonConverterFactory.create())  
+            .build()  
+    private val githubRetrofit: Retrofit =  
+        Retrofit.Builder()  
+            .baseUrl(GITHUB_BASE_URL)  
+            .addConverterFactory(GsonConverterFactory.create())  
+            .build()  
+    val soptService: SoptService = soptRetrofit.create(SoptService::class.java)  
+    val githubService: GithubService = githubRetrofit.create(GithubService::class.java)  
 }
 ```
+**SoptService.kt**
+```kotlin
+interface SoptService {  
+    @POST("/login/signin")  
+    fun postLogin(  
+        @Body body: RequestLoginData  
+    ): Call<ResponseLoginData>  
+  
+    @POST("/login/signup")  
+    fun postSignUp(  
+        @Body body: RequestSignupData  
+    ): Call<ResponseSignupData>  
+}
+```
+아래는 SingUpActivity와 SignInActivity에서 Retrofit을 Call하고 enqueue르 ㄹ통해 Callback을 받는 코드입니다.
+**SignUpActivity.kt**
+```kotlin
+val requestSignUpData = RequestSignupData(  
+    email = binding.etGithubEmail.text.toString(),  
+  password = binding.etGithubPw.text.toString(),  
+  sex = if (binding.rbMale.isChecked) {  
+        "0"  
+  } else {  
+        "1"  
+  },  
+  nickname = binding.etGithubNickname.text.toString(),  
+  phone = binding.etPhoneNumber.text.toString(),  
+  birth = binding.tvBirthdayDate.text.toString()  
+)  
+val call: Call<ResponseSignupData> =  
+    ServiceCreator.soptService.postSignUp(requestSignUpData)  
+call.enqueue(object : Callback<ResponseSignupData> {  
+    override fun onResponse(  
+        call: Call<ResponseSignupData>,  
+  response: Response<ResponseSignupData>  
+    ) {  
+        if (response.isSuccessful) {  
+            val data = response.body()?.responseData  
+  if (response.body()?.success == true) {  
+                toast(data?.nickname ?: "")  
+                startSignInActivity()  
+            } else {  
+                toast("Error")  
+            }  
+        }  
+    }  
+    override fun onFailure(call: Call<ResponseSignupData>, t: Throwable) {  
+        Log.e("NetworkFailure", "error:$t")  
+    }  
+})
+```
 
-SigningActivity.kt
+**SigninActivity.kt**
 ```kotlin
 private fun setRepoRv() {  
     val repoList = mutableListOf<RepositoryInfo>()  
@@ -64,123 +102,118 @@ private fun setRepoRv() {
     repoAdapter.notifyDataSetChanged()  
 }
 ```
-위 코드로 xml에 있던 recyclerview에 adapter를 연결해줄 수 있습니다.
-<br>
-### textview의 길이가 너무 길어질 경우에 대한 처리
-```xml
-android:ellipsize="end"  
-android:maxLines="1"
-```
-<br>
-
-### Fragment 내의 리사이클러 뷰 처리
-기존에 Fragment에 대해 잘 몰랐는데 이번 기회에 조금 알 수 있게 되었습니다.
-1. 먼저 Fragment xml과 kotlin 파일을 생성하고 정의합니다.
-```kotlin
-override fun onCreateView(  
-    inflater: LayoutInflater,  
-  container: ViewGroup?,  
-  savedInstanceState: Bundle?  
-): View {  
-    binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follower, container, false)  
-    setFollowerRv() // 이 코드는 RecyclerView 설정하는 코드여서 꼭 들어가야 하는 코드가 아닙니다.
-    return binding.root  
-}
-```
-Fragment 내에서는 `onCreateView`를 overriding해야 합니다. 
-
-2. 그 후 Fragment를 띄울 Activity에서 Fragment 설정을 합니다.
-```kotlin
-private fun connectFragment() {  
-    val followerFragment = FollowerFragment()  
-    val transaction = supportFragmentManager.beginTransaction()  
-    transaction.add(R.id.fragment_follower, followerFragment)  
-    transaction.commit()  
-}
-```
 
 <br>
 <br>
 
-## Level 2 - GridLayoutManager + Multi ViewType
+## Level 2 - Github API 이용하기
+<p align="center">Github Repository와 Follower 수신 구현</p>
 <p align="center">
-<img src="https://user-images.githubusercontent.com/57510192/115835140-ecac8400-a450-11eb-9039-700268446616.PNG" width="350px">
+<img src="https://user-images.githubusercontent.com/57510192/118343963-ddf45100-b566-11eb-9dc0-87db696eda86.PNG" class="inline" width="200px">
+<img src="https://user-images.githubusercontent.com/57510192/118343988-f6646b80-b566-11eb-8596-89be684c3f8b.PNG" class="inline" width="200px">
 </p>
 
-### GridLayout
-GridLayoutManager를 사용하기 위해서는 기존 Recyclerview에서 두 가지 attribute만 추가해주면 됩니다.
-`app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"`, `app:spanCount="3"`입니다. 
-첫 번째 속성은 Grid로 view를 보여주겠다는 것이고, spanCount는 한 줄에 몇 개의 view가 띄워질 것인지에 대한 속성입니다.
-<br>
-
-### Recyclerview에 여러 view 보여주기
-카카오톡과 같은 곳에서 흔하게 사용할 것 같은 Multi Viewtype을 활용하여 GridLayout에 다양한 view를 띄웠습니다.
-1. 먼저 RecyclerView Adapter에서 `getItemViewType`을 overriding하여 넘겨줄 viewtype을 설정합니다.
+Level 1과 마찬가지로 Service interface 생성<br>
+**GithubService.kt**
 ```kotlin
-override fun getItemViewType(position: Int): Int {  
-    return when(data[position].viewType){  
-        FollowerInfo.NORMAL_CONTENT -> FollowerInfo.NORMAL_CONTENT  
-  FollowerInfo.AD_CONTENT -> FollowerInfo.AD_CONTENT  
-		else -> throw RuntimeException("View Type Error at getItemViewType")  
-    }  
-}
-```
-2. `onCreateViewHolder`에서는 넘어오는 viewType에 따라 viewholder를 알맞게 처리해줍니다.
-```kotlin
-override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {  
-    val layoutInflater = LayoutInflater.from(parent.context)  
-    return when (viewType) {  
-        FollowerInfo.NORMAL_CONTENT -> {  
-            val binding: ItemFollowerBinding =  
-                DataBindingUtil.inflate(layoutInflater, R.layout.item_follower, parent, false)  
-            FollowerViewHolder(binding)  
-        }  
-        FollowerInfo.AD_CONTENT -> {  
-            val binding: ItemAdvertisementBinding = DataBindingUtil.inflate(  
-                layoutInflater,  
-  R.layout.item_advertisement,  
-  parent,  
- false  )  
-            AdViewHolder(binding)  
-        }  
-        else -> throw RuntimeException("View Type Error at onCreateViewHolder")  
-    }  
-}
-```
-3. `onBindViewHolder()`에서도 마찬가지로 viewType에 따라 목적에 맞는 viewholder와 연결하여 binding처리를 해줍니다.
-```kotlin
-override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {  
-    val obj = data[position]  
-    when (obj.viewType) {  
-        FollowerInfo.NORMAL_CONTENT -> {  
-            (holder as FollowerViewHolder).bind(obj)  
-        }  
-        FollowerInfo.AD_CONTENT -> {  
-            (holder as AdViewHolder).bind()  
-        }  
-    }  
-}
-```
-4. viewHolder class를 목적에 맞게 여러 개를 만들어야 합니다.
-```kotlin
-class FollowerViewHolder(private val binding: ItemFollowerBinding) :  
-    RecyclerView.ViewHolder(binding.root) {  
-    fun bind(followerInfo: FollowerInfo) {  
-        binding.apply {  
-  follower = followerInfo  
-        }  
-  }  
-}  
+interface GithubService {  
+    @Headers("Authorization: ${R.string.github_private_Key}")  
+    @GET("/users/WonJoongLee/repos")  
+    fun getRepos(): Call<List<RepositoryInfo>>  
   
-class AdViewHolder(private val binding: ItemAdvertisementBinding) :  
-    RecyclerView.ViewHolder(binding.root) {  
-    fun bind() {  
-        binding.apply {  
-  adContent = "광고!"  
+    @Headers("Authorization: ${R.string.github_private_Key}")  
+    @GET("/users/WonJoongLee/followers")  
+    fun getFollowers(): Call<List<FollowerInfo>>  
+}
+```
+Headers 어노테이션에 github private key를 추가했는데, 하루 Github에서 제공하는 API 사용량 초과시 추가로 private key를 넣으면 더 사용할 수 있게 해줬습니다. `R.string.github_private_key`는 values에 secret_keys.xml을 추가하여 따로 관리하고 `gitignore`파일을 통해 github에 올리지 않았습니다.
+
+**HomeActivity.kt**
+```kotlin
+private fun getRepos() {  
+    val call: Call<List<RepositoryInfo>> = ServiceCreator.githubService.getRepos()  
+    call.enqueue(object : Callback<List<RepositoryInfo>> {  
+        override fun onResponse(  
+            call: Call<List<RepositoryInfo>>,  
+  response: retrofit2.Response<List<RepositoryInfo>>  
+        ) {  
+            if (response.isSuccessful) {  
+                response.body()?.let {  
+  setRepoRv(it)  
+                }  
+  } else {  
+                Log.e("error", "getRepos() error")  
+            }  
+        }  
+  
+        override fun onFailure(call: Call<List<RepositoryInfo>>, t: Throwable) {  
+            Log.e("onFailure", t.toString())  
+        }  
+    })  
+}
+```
+Home Activity에서 Gihtub API를 통해 Repository를 가져오는 부분입니다.<br>
+
+## 기타
+### 리사이클러 뷰 간격 띄우기
+기존에는 리사이클러 뷰 사이의 간격을 띄우기 위해 리사이클러뷰 아이템에 margin이나 padding을 주는 방법을 사용했는데, 이번에는 `RecyclerView.ItemDecoration()`을 활용해봤습니다.
+```kotlin
+class RvItemDecoration(private val padding: Int, private val rvType: Int) :  
+    RecyclerView.ItemDecoration() {  
+    override fun getItemOffsets(  
+        outRect: Rect,  
+		view: View,  
+		parent: RecyclerView,  
+		state: RecyclerView.State  
+    ) {  
+        super.getItemOffsets(outRect, view, parent, state)  
+        with(outRect) {  
+		when (rvType) {  
+          // recyclerview가 repository인 경우  
+		  REPO_RV_TYPE -> {  
+	        top = padding  
+			bottom = padding  
+		  }  
+          // recyclerview가 follower인 경우  
+		  FOLLOWER_RV_TYPE -> {  
+	        top = padding  
+	        bottom = padding  
+	        left = padding  
+	        right = padding  
+		  }  
+        }  
+     }  
   }  
+  
+    companion object {  
+      val REPO_RV_TYPE = 1  
+	  val FOLLOWER_RV_TYPE = 2  
   }  
 }
 ```
-- FollowerViewHolder는 github follower들을 보여줄 viewholder입니다.
-- AdViewHolder는 광고 view를 보여줄 viewholder입니다.
+companion object를 public으로 설정해서 어떤 리사이클러 뷰에서 클래스를 호출하는지 인식할 수 있도록 했습니다. 
+<br>
+### 중요 key들 관리
+처음에는 코틀린 클래스를 하나 생성해서 중요 API 키들을 관리하려고 했는데, 그렇게 되면 google map이나 google admob과 같이 manifest.xml에서 키를 호출하기 어렵습니다. 그러므로 res.values에서 string으로 관리하는 것이 좋을 것 같아 `secret_keys.xml`로 중요 key들을 관리합니다. 그리고 해당 파일은 gitignore 파일에서 github에 올라가지 않도록 해야 합니다.
+<br>
+### 리사이클러 뷰 아이템 디자인 수정
+- 테두리를 추가했습니다.
+```xml
+<shape xmlns:android="http://schemas.android.com/apk/res/android"  
+  android:shape="rectangle">  
+ <stroke  android:width="2dp" android:color="@color/black" />  
+ <corners  android:radius="2dp"/>  
+</shape>
+```
+- 리플 효과를 넣었습니다.
+```xml
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"  
+  android:color="@color/black" />
+```
+
+## 4주차 이원중 패치 내역
+1. 서버와 통신하는 법을 몰랐었는데, 레트로핏을 통해 서버와 통신하는 기초를 학습했습니다.
+2. interface, singleton object이 무엇인지와 쓰는 방법을 학습했습니다.
+3. API 사용하는 법을 학습했습니다.
+4. drawable xml을 통해 버튼 배경과 리플 효과를 추가해보았지만, 더 공부를 해야합니다.
 
