@@ -13,8 +13,10 @@
         android:theme="@style/Theme.AndroidSeminar"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.FragmentActivity" />
-        <activity android:name=".ui.SignUpActivity" />
-        <activity android:name=".ui.HomeActivity"/>
+        <activity android:name=".ui.SignUpActivity" >
+
+        </activity>
+        <activity android:name=".ui.HomeActivity" />
         <activity android:name=".ui.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

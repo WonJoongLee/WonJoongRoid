@@ -61,6 +61,7 @@ class SignInActivity : AppCompatActivity() {
                             toast(data?.user_nickname + " 로그인 성공")
                             startHomeActivity()
                         } else {
+                            //Log.e("error", response.errorBody().toString())
                             toast("아이디/비밀번호를 확인해주세요!")
                         }
                     }
