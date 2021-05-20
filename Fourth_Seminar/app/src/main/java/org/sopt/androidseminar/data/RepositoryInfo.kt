@@ -1,3 +1,12 @@
 package org.sopt.androidseminar.data
 
-data class RepositoryInfo(val repoName : String, val repoInfo : String, val repoLang : String)
+import com.google.gson.annotations.SerializedName
+
+data class RepositoryInfo(
+    @SerializedName("name")
+    val repoName: String,
+    @SerializedName("language")
+    val repoLang: String,
+    @SerializedName("description")
+    val repoDescription: String
+)

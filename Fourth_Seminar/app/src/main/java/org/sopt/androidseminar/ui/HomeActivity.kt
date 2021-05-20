@@ -4,13 +4,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import org.sopt.androidseminar.LifecycleObserver
-import org.sopt.androidseminar.R
+import android.view.View
+import org.sopt.androidseminar.util.LifecycleObserver
 import org.sopt.androidseminar.adapters.RepositoryAdapter
+import org.sopt.androidseminar.api.ServiceCreator
 import org.sopt.androidseminar.data.RepositoryInfo
 import org.sopt.androidseminar.databinding.ActivityHomeBinding
+import org.sopt.androidseminar.util.RvItemDecoration
+import org.sopt.androidseminar.util.RvItemDecoration.Companion.REPO_RV_TYPE
+import retrofit2.Call
+import retrofit2.Callback
 
 class HomeActivity : AppCompatActivity() {
 
@@ -20,40 +23,51 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setRepoRv()
-        moreButtonClickedEvent()
+        getRepos()
+        moreButtonClickEvent()
         LifecycleObserver(javaClass.simpleName, this.lifecycle).registerLogger()
     }
 
-    private fun setRepoRv() {
-        val repoList = mutableListOf<RepositoryInfo>()
-        initData(repoList)
+    private fun getRepos() {
+        val call: Call<List<RepositoryInfo>> = ServiceCreator.githubService.getRepos()
+        call.enqueue(object : Callback<List<RepositoryInfo>> {
+            override fun onResponse(
+                call: Call<List<RepositoryInfo>>,
+                response: retrofit2.Response<List<RepositoryInfo>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        setRepoRv(it)
+                    }
+                } else {
+                    Log.e("error", "getRepos() error")
+                }
+            }
 
-        val repoAdapter = RepositoryAdapter()
-        val repoRecyclerView = binding.rvRepository
-        repoRecyclerView.adapter = repoAdapter
-        repoRecyclerView.setHasFixedSize(false)
-        repoAdapter.setItemList(repoList)
+            override fun onFailure(call: Call<List<RepositoryInfo>>, t: Throwable) {
+                Log.e("onFailure", t.toString())
+            }
+        })
     }
 
-    private fun moreButtonClickedEvent() {
+    private fun setRepoRv(repoList: List<RepositoryInfo>) {
+        val repoAdapter = RepositoryAdapter()
+        val repoRecyclerView = binding.rvRepository
+        repoAdapter.setItemList(repoList)
+        repoAdapter.notifyDataSetChanged()
+        with(repoRecyclerView) {
+            adapter = repoAdapter
+            setHasFixedSize(true)
+            addItemDecoration(RvItemDecoration(20, REPO_RV_TYPE))
+        }
+        binding.progressbarRepoRv.visibility = View.GONE
+    }
+
+    private fun moreButtonClickEvent() {
         binding.btMore.setOnClickListener {
             val intent = Intent(this, FragmentActivity::class.java)
             startActivity(intent)
         }
     }
 
-    private fun initData(repoList: MutableList<RepositoryInfo>) {
-        (1..10).forEach {
-            repoList.add(RepositoryInfo("레포지토리 이름".plus(it), "레포지토리 설명".plus(it), "레포지토리 언어".plus(it)))
-        }
-        //Repository 이름이나 설명이 긴 경우 처리를 보여주기 위해 임시로 추가
-        repoList.add(
-            RepositoryInfo(
-                "레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름레포지토리 이름",
-                "레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명레포지토리 설명",
-                "레포지토리 언어"
-            )
-        )
-    }
 }

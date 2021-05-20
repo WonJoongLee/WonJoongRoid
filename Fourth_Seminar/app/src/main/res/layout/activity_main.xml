@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/write_id"
             android:importantForAutofill="no"
-            android:inputType="text" />
+            android:inputType="text"
+            android:theme="@style/editTextColor"/>
 
 
     </LinearLayout>
@@ -60,8 +61,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/write_pw"
             android:importantForAutofill="no"
-            android:inputType="textPassword" />
-
+            android:inputType="textPassword"
+            android:theme="@style/editTextColor"/>
 
     </LinearLayout>
 
@@ -72,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/login"
-        android:background="@color/purple_500"
+        android:background="@color/dimgray"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
