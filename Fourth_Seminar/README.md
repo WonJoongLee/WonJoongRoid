@@ -1,4 +1,4 @@
-﻿# 2주차
+﻿# 4주차
 ### 구동영상
 <p align="center">
 <img src="https://user-images.githubusercontent.com/57510192/118343551-b7351b00-b564-11eb-9015-fa8fc7ccbfd3.gif" width="300px">
@@ -51,7 +51,7 @@ interface SoptService {
     ): Call<ResponseSignupData>  
 }
 ```
-아래는 SingUpActivity와 SignInActivity에서 Retrofit을 Call하고 enqueue르 ㄹ통해 Callback을 받는 코드입니다.
+아래는 SingUpActivity와 SignInActivity에서 Retrofit을 Call하고 enqueue를 통해 Callback을 받는 코드입니다.
 **SignUpActivity.kt**
 ```kotlin
 val requestSignUpData = RequestSignupData(  
