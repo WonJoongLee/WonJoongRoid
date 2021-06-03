@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import org.sopt.androidseminar.util.LifecycleObserver
 import org.sopt.androidseminar.api.ServiceCreator
+import org.sopt.androidseminar.data.SoptUserAuthStorage
 import org.sopt.androidseminar.data.request.RequestLoginData
 import org.sopt.androidseminar.data.response.ResponseLoginData
 import org.sopt.androidseminar.databinding.ActivityMainBinding
@@ -34,7 +35,11 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root) // 주의, 코틀린에서 프로퍼티기 때문에 .root로 바로 getter 호출이 된다.
-
+        // 유저데이터가 있으면 Home Activity 바로 시작
+        if(SoptUserAuthStorage.hasUserData(this)){
+            startHomeActivity()
+            finish()
+        }
         loginButtonClickEvent()
         signUpButtonClickEvent()
         LifecycleObserver(javaClass.simpleName, this.lifecycle).registerLogger()
@@ -57,6 +62,9 @@ class SignInActivity : AppCompatActivity() {
                         response: Response<ResponseLoginData>
                     ) {
                         if (response.isSuccessful) {
+                            // 로그인에 성공하면 저장
+                            SoptUserAuthStorage.saveUserId(this@SignInActivity, binding.etGithubId.text.toString())
+                            SoptUserAuthStorage.saveUserPw(this@SignInActivity, binding.etGithubPw.text.toString())
                             val data = response.body()?.data
                             toast(data?.user_nickname + " 로그인 성공")
                             startHomeActivity()
