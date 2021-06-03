@@ -42,14 +42,14 @@ object SoptUserAuthStorage {
         return sharedPreferences.getString(USER_PASSWORD, "") ?: ""
     }
 
-    fun hasUserData(context: Context): Boolean = getUserId(context).isNotEmpty() && getUserPw(context).isNotEmpty()
-//        val sharedPreferences = context.getSharedPreferences(
-//            "${context.packageName}.$STORAGE_KEY",
-//            Context.MODE_PRIVATE
-//        )
-        // null이거나 Blank일 때 false를 보내는 return
-//        return getUserId(context).isNotEmpty() && getUserPw(context).isNotEmpty()
-//        return !sharedPreferences.getString(USER_ID, "").isNullOrBlank() &&
-//                !sharedPreferences.getString(USER_PASSWORD, "").isNullOrBlank()
-//    }
+    fun clearAuthStorage(context: Context) {
+        val sharedPreferences = context.getSharedPreferences(
+            "${context.packageName}.$STORAGE_KEY",
+            Context.MODE_PRIVATE
+        )
+        sharedPreferences.edit().clear().apply()
+    }
+
+    fun hasUserData(context: Context) =
+        getUserId(context).isNotEmpty() && getUserPw(context).isNotEmpty()
 }

@@ -7,6 +7,17 @@
     tools:context=".ui.HomeActivity">
 
     <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        />
+
+    <ImageView
         android:id="@+id/iv_wonjoong_image"
         android:layout_width="180dp"
         android:layout_height="180dp"

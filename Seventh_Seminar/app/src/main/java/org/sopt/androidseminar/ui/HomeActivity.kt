@@ -9,6 +9,7 @@ import org.sopt.androidseminar.util.LifecycleObserver
 import org.sopt.androidseminar.adapters.RepositoryAdapter
 import org.sopt.androidseminar.api.ServiceCreator
 import org.sopt.androidseminar.data.RepositoryInfo
+import org.sopt.androidseminar.data.SoptUserAuthStorage
 import org.sopt.androidseminar.databinding.ActivityHomeBinding
 import org.sopt.androidseminar.util.RvItemDecoration
 import org.sopt.androidseminar.util.RvItemDecoration.Companion.REPO_RV_TYPE
@@ -25,7 +26,17 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         getRepos()
         moreButtonClickEvent()
+        closeButtonClickEvent()
         LifecycleObserver(javaClass.simpleName, this.lifecycle).registerLogger()
+    }
+
+    private fun closeButtonClickEvent() {
+        binding.ivClose.setOnClickListener {
+            SoptUserAuthStorage.clearAuthStorage(this)
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun getRepos() {
